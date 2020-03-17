@@ -1,5 +1,11 @@
 ﻿using CodeForFun.Repository.Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
+using IdentityServer4.EntityFramework.Options;
+
+using Microsoft.Extensions.Options;
+using CodeForFun.UI.WebMvcCore.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace CodeForFun.Repository.DataAccess.DbContexts
 {
@@ -18,7 +24,7 @@ namespace CodeForFun.Repository.DataAccess.DbContexts
 			optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=code-for-fun-db;Trusted_Connection=True");
 		}
 
-
+		public DbSet<User> Users { get; set; }
 		public DbSet<Category> Categories { get; set; }
 		public DbSet<Customer> Customers { get; set; }
 		public DbSet<Product> Products { get; set; }

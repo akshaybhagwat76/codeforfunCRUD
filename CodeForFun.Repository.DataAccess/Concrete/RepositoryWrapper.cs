@@ -17,6 +17,7 @@ namespace CodeForFun.Repository.DataAccess.Concrete
 		private ICategory _category;
 		private ICustomer _customer;
 		private IProduct _product;
+		private IUser _user;
 		private IProductDetails _productDetails;
 		private IProductsToCustomers _productsToCustomers;
 
@@ -35,5 +36,7 @@ namespace CodeForFun.Repository.DataAccess.Concrete
 
 		public IProductsToCustomers ProductsToCustomers =>
 			_productsToCustomers ?? new ProductsToCustomersRepository(_context);
+
+		public IUser User => _user ?? new UserRepository(_context);
 	}
 }

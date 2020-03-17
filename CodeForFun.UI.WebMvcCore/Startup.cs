@@ -20,6 +20,9 @@ using CodeForFun.UI.WebMvcCore.Mapper;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using CodeForFun.Repository.DataAccess.DbContexts;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace CodeForFun.UI.WebMvcCore
 {
@@ -44,20 +47,26 @@ namespace CodeForFun.UI.WebMvcCore
             services.AddSingleton(map);
 
 
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<RepositoryContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddIdentityServer()
-                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.SaveToken = true;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                          // установка ключа безопасности
+                          IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
+                          // валидация ключа безопасности
+                          ValidateIssuerSigningKey = true,
+                    };
+                });
 
-            services.AddAuthentication()
-                .AddIdentityServerJwt();
-            services.AddControllersWithViews();
-            services.AddRazorPages();
 
             services.AddCors(options =>
             {
@@ -81,7 +90,7 @@ namespace CodeForFun.UI.WebMvcCore
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
             services.AddScoped<IProductService, ProductManager>();
             services.AddScoped<ICategoryService, CategoryManager>();
-
+            services.AddScoped<IAuth, AuthManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -109,8 +118,7 @@ namespace CodeForFun.UI.WebMvcCore
 
             app.UseRouting();
 
-            app.UseAuthentication();
-            app.UseIdentityServer();
+            app.UseAuthentication();   
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
