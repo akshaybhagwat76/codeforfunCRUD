@@ -1,6 +1,7 @@
 ﻿using CodeForFun.UI.WebMvcCore.Models;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
@@ -14,4 +15,5 @@ namespace CodeForFun.UI.WebMvcCore.Data
         {
         }
     }
+    public class ApplicationUser : IdentityUser { }
 }

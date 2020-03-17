@@ -19,7 +19,6 @@
         class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse"
         [ngClass]="{ show: isExpanded }"
       >
-        <app-login-menu></app-login-menu>
         <ul class="navbar-nav flex-grow">
           <li
             class="nav-item"
@@ -43,8 +42,30 @@
               >Fetch data</a
             >
           </li>
+          <li *ngIf="!isLogged" class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-dark" (click)="loginForm = !loginForm;registerForm = false"
+              >Login</a
+            >
+          </li>
+          <li class="nav-item" *ngIf="!isLogged" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-dark" (click)="registerForm = !registerForm;loginForm = false"
+              >Register</a
+            >
+          </li>
+
+          <div *ngIf="isLogged">
+          <button type="button"  class="btn  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">
+          Welcome {{user.name}}
+        </button>
+        <div class="dropdown-menu topsearch text-right">
+          <button class="dropdown-item nav-link" (click)="logout()">LogOut</button>
+        </div>
+      </div>
         </ul>
       </div>
     </div>
   </nav>
+  <app-login *ngIf="!registerForm && loginForm" (user)="logged($event)"></app-login>
+  <app-register *ngIf="!loginForm && registerForm" (user)="logged($event)"></app-register>
 </header>

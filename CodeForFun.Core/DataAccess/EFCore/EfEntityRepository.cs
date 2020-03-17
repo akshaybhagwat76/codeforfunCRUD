@@ -25,7 +25,6 @@ namespace CodeForFun.Core.DataAccess.EFCore
 		{
 			_context.Add(entity);
 			_context.SaveChanges();
-			_context.Dispose();
 		}
 
 		// CREATE ASYNC
@@ -33,7 +32,6 @@ namespace CodeForFun.Core.DataAccess.EFCore
 		{
 			await Task.Run(() => _context.AddAsync(entity));
 			_context.SaveChanges();
-			_context.Dispose();
 		}
 
 
@@ -50,7 +48,6 @@ namespace CodeForFun.Core.DataAccess.EFCore
 		{
 			await Task.Run(() => _context.AddRangeAsync(entities));
 			_context.SaveChanges();
-			_context.Dispose();
 		}
 
 
@@ -84,7 +81,6 @@ namespace CodeForFun.Core.DataAccess.EFCore
 		{
 			_context.Entry(entity).State = EntityState.Modified;
 			_context.SaveChanges();
-			_context.Dispose();
 		}
 
 		// UPDATE ASYNC
@@ -107,7 +103,6 @@ namespace CodeForFun.Core.DataAccess.EFCore
 		{
 			await Task.Run(() => _context.UpdateRange(entities));
 			_context.SaveChanges();
-			_context.Dispose();
 		}
 
 		// DELETE
@@ -115,7 +110,6 @@ namespace CodeForFun.Core.DataAccess.EFCore
 		{
 			_context.Remove(entity);
 			_context.SaveChanges();
-			_context.Dispose();
 		}
 
 		// DELETE ASYNC
@@ -123,7 +117,6 @@ namespace CodeForFun.Core.DataAccess.EFCore
 		{
 			await Task.Run(() => _context.Remove(entity));
 			_context.SaveChanges();
-			_context.Dispose();
 		}
 
 
@@ -132,7 +125,6 @@ namespace CodeForFun.Core.DataAccess.EFCore
 		{
 			_context.RemoveRange(entities);
 			_context.SaveChanges();
-			_context.Dispose();
 		}
 
 		// DELETE RANGE ASYNC
@@ -140,7 +132,6 @@ namespace CodeForFun.Core.DataAccess.EFCore
 		{
 			await Task.Run(() => _context.RemoveRange(entities));
 			_context.SaveChanges();
-			_context.Dispose();
 		}
 	}
 }
