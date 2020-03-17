@@ -6,12 +6,15 @@
           <h2>Manage <b>Employees</b></h2>
         </div>
         <div class="col-sm-6">
+          <a href="" (click)="OrdersMode('getAll')" *ngIf="!isOrdersShow && isProductsShow" class="btn btn-success" data-toggle="modal"> <span>Orders</span></a>
+          <a href="" (click)="OrdersMode()" *ngIf="isOrdersShow && !isProductsShow" class="btn btn-success" data-toggle="modal"> <span>Products</span></a>
           <a href="" (click)="createProductMode()" class="btn btn-success" data-toggle="modal"> <span>Add New Product</span></a>
           <app-category (selectedCategory)="selectCategory($event)"></app-category>
         </div>
       </div>
     </div>
-    <table class="table table-striped table-hover" *ngIf="!editMode">
+    <app-orders *ngIf="isOrdersShow && !isProductsShow"></app-orders>
+    <table class="table table-striped table-hover" *ngIf="!editMode && isProductsShow">
       <thead>
         <tr>
           <th>Name</th>
@@ -26,7 +29,7 @@
       <tbody>
         <tr *ngFor="let product of  filteredProducts">
 
-          <td>{{product.name}}</td>
+          <td><a class="nav-link text-dark"  (click)="getOrdersByProduct(product.id)">{{product.name}}</a></td>
           <td>{{product.code}}</td>
           <td>{{product.unitPrice}}</td>
           <td>{{product.isActive}}</td>

@@ -91,6 +91,8 @@ namespace CodeForFun.UI.WebMvcCore
             services.AddScoped<IProductService, ProductManager>();
             services.AddScoped<ICategoryService, CategoryManager>();
             services.AddScoped<IAuth, AuthManager>();
+            services.AddTransient<IProductsToCustomer, ProductsToCustomerManager>();
+            services.AddScoped<IProductDetailsService, ProductDetailsManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
