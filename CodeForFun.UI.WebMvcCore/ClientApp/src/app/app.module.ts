@@ -19,6 +19,8 @@ import { GoogleLoginProvider, FacebookLoginProvider } from "angularx-social-logi
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { AccountService } from './services/account.service';
+import { OrdersComponent } from './orders/orders.component';
+import { OrderService } from './services/order.service';
 
 
 let config = new AuthServiceConfig([
@@ -45,8 +47,10 @@ export function provideConfig() {
       FetchDataComponent,
       ProductsComponent,
       CategoryComponent,
+      OrdersComponent,
       LoginComponent,
-      RegisterComponent
+      RegisterComponent,
+      OrdersComponent
    ],
    imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -71,7 +75,8 @@ export function provideConfig() {
     },
     CategoryService,
     ProductService,
-    AccountService
+    AccountService,
+    OrderService
     
   ],
   bootstrap: [AppComponent]
