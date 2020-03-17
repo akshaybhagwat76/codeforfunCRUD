@@ -4,6 +4,7 @@ using CodeForFun.Repository.Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -68,6 +69,11 @@ namespace CodeForFun.Repository.Business.Concrete.Managers
         public async void DeleteRangeAsync(IEnumerable<int> ids)
         {
             await Task.Run(() => { _dal.ProductsToCustomers.DeleteRange(ids.Select(id => new ProductsToCustomer { ProductsToCustomerId = id }).ToList()); });
+        }
+
+        public async Task<List<ProductsToCustomer>> GetAllWithInclude(params Expression<Func<ProductsToCustomer, object>>[] includeProperties)
+        {
+            return await _dal.ProductsToCustomers.GetAllWithInclude(includeProperties);
         }
     }
 }

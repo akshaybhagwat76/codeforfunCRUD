@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../services/product.service';
+import { OrderService } from '../services/order.service';
 
 @Component({
   selector: 'app-products',
@@ -9,15 +10,18 @@ import { ProductService } from '../services/product.service';
 export class ProductsComponent implements OnInit {
   products: Array<Product> = [];
   filteredProducts: Array<Product> = [];
+  isOrdersShow = false;
+  isProductsShow;
   editMode = false;
   creatingMode = false;
   categoryName;
-  productForEditOrCreate:any = {};
+  productForEditOrCreate: any = {};
 
-  constructor(private productService: ProductService) {
+  constructor(private productService: ProductService, private orderService: OrderService) {
   }
 
   ngOnInit() {
+    this.isProductsShow = true;
     this.fetch();
   }
 
@@ -44,13 +48,27 @@ export class ProductsComponent implements OnInit {
     }
 
   }
-createProductMode(){
-  this.creatingMode = !this.creatingMode;
-}
 
-  deleteProduct(productId){
+  getOrdersByProduct(productId) {
+    this.orderService.productId = productId;
+    this.OrdersMode("");
+  }
+
+  createProductMode() {
+    this.creatingMode = !this.creatingMode;
+  }
+
+  OrdersMode(orderMode) {
+    if (orderMode == "getAll")
+      this.orderService.productId = null;
+
+    this.isOrdersShow = !this.isOrdersShow;
+    this.isProductsShow = !this.isProductsShow;
+  }
+
+  deleteProduct(productId) {
     console.log(productId);
-    this.productService.delete(productId).subscribe(x=>{
+    this.productService.delete(productId).subscribe(x => {
       this.fetch();
     })
   }
@@ -62,14 +80,14 @@ createProductMode(){
     })
   }
 
-  saveSelectedCategory($event){
+  saveSelectedCategory($event) {
     this.categoryName = $event;
   }
 
-  createProduct(){
+  createProduct() {
     this.productForEditOrCreate.categoryName = this.categoryName;
 
-    this.productService.add(this.productForEditOrCreate).subscribe(x=>{
+    this.productService.add(this.productForEditOrCreate).subscribe(x => {
       this.fetch();
       this.creatingMode = !this.creatingMode;
     })
