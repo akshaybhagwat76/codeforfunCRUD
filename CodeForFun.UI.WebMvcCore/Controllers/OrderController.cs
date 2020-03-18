@@ -68,7 +68,7 @@ namespace CodeForFun.UI.WebMvcCore.Controllers
 					orders.Add(new OrderViewModel
 					{
 						Name = product.Product.Name,
-						CategoryName = product.Product.Category.Name,
+						CategoryName =_categoryService.GetAllWithInclude(x => x.Products).Result.Where(x=>x.Products.Where(y => y.Name == product.Product.Name) != null).FirstOrDefault().Name,
 						DateRegister = product.Product.DateRegister,
 						Description = product.Product.ProductDetail?.Description ?? null,
 						IsActive = product.Product.IsActive,
