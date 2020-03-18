@@ -76,9 +76,9 @@ namespace CodeForFun.Repository.Business.Concrete.Managers
             return await _dal.Category.GetAllWithInclude(includeProperties);
         }
 
-        public Category GetByName(string name)
+        public async Task<Category> GetByName(string name)
         {
-            return _dal.Category.Get(x => x.Name == name);
+            return await _dal.Category.Get(x => x.Name == name);
         }
     }
 }

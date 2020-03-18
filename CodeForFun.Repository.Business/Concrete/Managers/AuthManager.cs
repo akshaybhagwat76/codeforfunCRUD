@@ -58,11 +58,11 @@ namespace CodeForFun.Repository.Business.Concrete.Managers
 
 			if (p == null)
 				return null;
-			if (!VerifyPasswordHash(password, p.PasswordHash, p.PasswordSalt))
+			if (!VerifyPasswordHash(password, p.Result.PasswordHash, p.Result.PasswordSalt))
 				return null;
 			var claims = new List<Claim>
 		  {
-				new Claim(ClaimTypes.Name,p.Email)
+				new Claim(ClaimTypes.Name,p.Result.Email)
 		   };
 
 
