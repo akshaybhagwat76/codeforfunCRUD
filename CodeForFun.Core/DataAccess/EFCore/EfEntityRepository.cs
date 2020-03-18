@@ -16,9 +16,9 @@ namespace CodeForFun.Core.DataAccess.EFCore
 
 		private TContext _context;
 
-		public EfEntityRepository(TContext context)
+		public EfEntityRepository(TContext context = null)
 		{
-			_context = context ?? new TContext();
+			_context =  new TContext();
 		}
 		// CREATE
 		public void Create(TEntity entity)
@@ -30,7 +30,7 @@ namespace CodeForFun.Core.DataAccess.EFCore
 		// CREATE ASYNC
 		public async void CreateAsync(TEntity entity)
 		{
-			await Task.Run(() => _context.AddAsync(entity));
+			 _context.AddAsync(entity);
 			_context.SaveChanges();
 		}
 
@@ -40,7 +40,6 @@ namespace CodeForFun.Core.DataAccess.EFCore
 		{
 			_context.AddRange(entities);
 			_context.SaveChanges();
-			_context.Dispose();
 		}
 
 		// CREATE RANGE ASYNC

@@ -10,6 +10,6 @@ namespace CodeForFun.Core
     public interface IQueryableRepository<T> where T : class, new()
     {
         Task<List<T>> GetAllWithInclude(params Expression<Func<T, object>>[] includeProperties);
-        T Get(Func<T, bool> predicate);
+        Task<T> Get(Expression<Func<T, bool>> predicate);
     }
 }
