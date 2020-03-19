@@ -6,13 +6,22 @@ using IdentityServer4.EntityFramework.Options;
 using Microsoft.Extensions.Options;
 using CodeForFun.UI.WebMvcCore.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
+using System.IO;
+using System;
+using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Hosting;
 
 namespace CodeForFun.Repository.DataAccess.DbContexts
 {
 	public partial class RepositoryContext : DbContext
 	{
-		public RepositoryContext(DbContextOptions<RepositoryContext> options) : base(options)
+		private readonly IWebHostEnvironment _env;
+		IConfiguration _iconfiguration;
+		public RepositoryContext(DbContextOptions<RepositoryContext> options, IWebHostEnvironment env, IConfiguration iconfiguration) : base(options)
 		{
+			_env = env;
+			_iconfiguration = iconfiguration;
 
 		}
 		public RepositoryContext()
@@ -21,9 +30,14 @@ namespace CodeForFun.Repository.DataAccess.DbContexts
 		}
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-			optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=code-for-fun-db;Trusted_Connection=True");
-		}
+			IConfigurationBuilder configurationBuilder = new ConfigurationBuilder().SetBasePath(_env.ContentRootPath).AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 
+			IConfigurationRoot configurationRoot = configurationBuilder.Build();
+			var conn = configurationRoot.GetConnectionString("DefaultConnection");
+			//string connString = Startup.StaticConfig.GetConnectionString("DefaultConnection");
+
+			optionsBuilder.UseSqlServer(conn);
+		}
 		public DbSet<User> Users { get; set; }
 		public DbSet<Category> Categories { get; set; }
 		public DbSet<Customer> Customers { get; set; }

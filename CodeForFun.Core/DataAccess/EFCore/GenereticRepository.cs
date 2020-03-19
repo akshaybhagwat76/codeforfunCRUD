@@ -19,7 +19,7 @@ namespace CodeForFun.Core.DataAccess.EFCore
 
 		public GenereticRepository(TContext context) : base(context)
 		{
-			_context = context ?? new TContext();
+			_context =  new TContext();
 			_entities = _context.Set<TEntity>();
 		}
 
@@ -28,9 +28,9 @@ namespace CodeForFun.Core.DataAccess.EFCore
 			return await Include(includeProperties).ToListAsync();
 		}
 
-		public TEntity Get(Func<TEntity, bool> predicate)
+		public async Task<TEntity> Get(Expression<Func<TEntity, bool>> predicate)
 		{
-			return _entities.AsNoTracking().SingleOrDefault(predicate);
+			return await _entities.AsNoTracking().FirstOrDefaultAsync(predicate);
 		}
 
 		private IQueryable<TEntity> Include(params Expression<Func<TEntity, object>>[] includeProperties)
