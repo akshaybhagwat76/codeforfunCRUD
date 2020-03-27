@@ -1,0 +1,76 @@
+<div class="container">
+  <div class="table-wrapper">
+    <div class="table-title">
+      <div class="row">
+        <div class="col-sm-2">
+          <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false" value="sel">
+            Search By
+          </button>
+          <div class="dropdown-menu">
+            <button class="dropdown-item" href="" (click)="selectSearchType('File')"
+              >File</button>
+              <button class="dropdown-item" href="" (click)="selectSearchType('Table')"
+              >Table</button>
+          </div>
+        </div>
+        <div class="col-sm-2" *ngIf="isTableSelected">
+          <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false" value="sel">
+            {{selectedTable || 'SelectTable'}}
+          </button>
+          <div class="dropdown-menu">
+            <button class="dropdown-item" href="" *ngFor="let tableName of tableNames"
+              (click)="selecTable(tableName)">{{tableName}}</button>
+          </div>
+        </div>
+        <div class="col-sm-2" *ngIf="isTableSelected">
+          <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false" value="sel">
+            {{selectedTableProperty || 'SelectTableProperty'}}
+          </button>
+          <div class="dropdown-menu">
+            <button class="dropdown-item" href="" *ngFor="let property of tableProperties?.Properties"
+              (click)="selectProperty(property)">{{property}}</button>
+          </div>
+        </div>
+        <div class="col-sm-2" *ngIf="!isTableSelected">
+                  <input type="file" id="ctrl" webkitdirectory directory multiple (change)=" fileEvent($event)"/>
+        </div>
+        <div class="col-sm-6">
+          <input class="form-control" type="text" placeholder="Search" aria-label="Search" [(ngModel)]="filt">
+        </div>
+      </div>
+    </div>
+  </div>
+  <table class="table table-striped table-hover" style="text-align: center;" *ngIf="isTableSelected">
+    <thead>
+        <tr>
+            <th *ngFor="let property of tableProperties?.Properties">{{property}}</th>
+        </tr>
+    </thead>
+    <tbody >
+        <tr  *ngFor="let entity of tableProperties?.Entities | filter :{name:selectedTableProperty,filt:filt}">
+            <td *ngFor="let property of tableProperties?.Properties">{{entity[property.substring(0,1).toLowerCase()+property.substring(1)]}}</td>
+        </tr>
+    </tbody>
+</table>
+
+<table class="table table-striped table-hover" style="text-align: center;" *ngIf="!isTableSelected">
+  <thead>
+      <tr>
+          <th>FileName</th>
+          <th>FilePath</th>
+          <th>Value</th>
+      </tr>
+  </thead>
+  <tbody >
+      <tr *ngFor="let file of files | filter :{name:'',filt:filt}">
+          <td >{{file.fileName}}</td>
+          <td >{{file.filePath}}</td>
+          <td >{{file.value}}</td>
+      </tr>
+  </tbody>
+</table>
+
+</div>

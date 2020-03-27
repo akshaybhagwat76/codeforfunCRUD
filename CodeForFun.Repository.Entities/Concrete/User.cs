@@ -1,7 +1,7 @@
 ﻿using CodeForFun.Core.Entities;
 using System;
 
-namespace CodeForFun.UI.WebMvcCore.Models
+namespace CodeForFun.Repository.Entities.Concrete
 {
     public class User:IEntity
     {

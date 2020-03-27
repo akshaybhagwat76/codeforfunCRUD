@@ -11,7 +11,7 @@ namespace CodeForFun.Repository.Entities.Concrete
     {
         public Customer()
         {
-            ProductsToCustomers = new HashSet<ProductsToCustomer>();
+            ProductsToCustomers = new HashSet<ProductsToCustomers>();
         }
 
         [Key]
@@ -21,7 +21,7 @@ namespace CodeForFun.Repository.Entities.Concrete
         [StringLength(24)]
         public string Surname { get; set; }
 
-        [InverseProperty(nameof(ProductsToCustomer.Customer))]
-        public virtual ICollection<ProductsToCustomer> ProductsToCustomers { get; set; }
+        [InverseProperty(nameof(Concrete.ProductsToCustomers.Customer))]
+        public virtual ICollection<ProductsToCustomers> ProductsToCustomers { get; set; }
     }
 }

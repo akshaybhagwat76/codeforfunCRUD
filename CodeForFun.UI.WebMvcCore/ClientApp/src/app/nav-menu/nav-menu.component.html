@@ -41,6 +41,10 @@
             <a class="nav-link text-dark" [routerLink]="['/fetch-data']"
               >Fetch data</a
             >
+            <li class="nav-item" [routerLinkActive]="['link-active']">
+              <a class="nav-link text-dark" [routerLink]="['/search']"
+                >Search</a
+              >
           </li>
           <li *ngIf="!isLogged" class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link text-dark" (click)="loginForm = !loginForm;registerForm = false"
@@ -52,6 +56,7 @@
               >Register</a
             >
           </li>
+          
 
           <div *ngIf="isLogged">
           <button type="button"  class="btn  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"

@@ -21,6 +21,9 @@ import { RegisterComponent } from './auth/register/register.component';
 import { AccountService } from './services/account.service';
 import { OrdersComponent } from './orders/orders.component';
 import { OrderService } from './services/order.service';
+import { SearchComponent } from './search/search.component';
+import { SearchService } from './services/search.service';
+import { FilterPipe } from './pipes/filter.pipe';
 
 
 let config = new AuthServiceConfig([
@@ -50,7 +53,9 @@ export function provideConfig() {
       OrdersComponent,
       LoginComponent,
       RegisterComponent,
-      OrdersComponent
+      OrdersComponent,
+      SearchComponent,
+      FilterPipe
    ],
    imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -63,7 +68,8 @@ export function provideConfig() {
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
-      { path: 'products', component: ProductsComponent}
+      { path: 'products', component: ProductsComponent},
+      { path: 'search', component: SearchComponent}
     ])
   ],
   providers: [
@@ -76,7 +82,9 @@ export function provideConfig() {
     CategoryService,
     ProductService,
     AccountService,
-    OrderService
+    OrderService,
+    SearchService,
+    FilterPipe
     
   ],
   bootstrap: [AppComponent]

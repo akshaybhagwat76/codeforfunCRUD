@@ -1,11 +1,5 @@
 ﻿using CodeForFun.Repository.Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
-using IdentityServer4.EntityFramework.Options;
-
-using Microsoft.Extensions.Options;
-using CodeForFun.UI.WebMvcCore.Models;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace CodeForFun.Repository.DataAccess.DbContexts
 {
@@ -28,8 +22,8 @@ namespace CodeForFun.Repository.DataAccess.DbContexts
 		public DbSet<Category> Categories { get; set; }
 		public DbSet<Customer> Customers { get; set; }
 		public DbSet<Product> Products { get; set; }
-		public DbSet<ProductDetail> ProductDetails { get; set; }
-		public DbSet<ProductsToCustomer> ProductsToCustomers { get; set; }
+		public DbSet<ProductDetails> ProductDetails { get; set; }
+		public DbSet<ProductsToCustomers> ProductsToCustomers { get; set; }
 
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -65,10 +59,10 @@ namespace CodeForFun.Repository.DataAccess.DbContexts
 
 				entity.HasOne(x => x.ProductDetail)
 				.WithOne(x => x.IdNavigation)
-				.HasForeignKey<ProductDetail>(x => x.Id);
+				.HasForeignKey<ProductDetails>(x => x.Id);
 			});
 
-			modelBuilder.Entity<ProductDetail>(entity =>
+			modelBuilder.Entity<ProductDetails>(entity =>
 			{
 				entity.Property(e => e.Id).ValueGeneratedNever();
 
@@ -76,12 +70,12 @@ namespace CodeForFun.Repository.DataAccess.DbContexts
 
 				entity.HasOne(d => d.IdNavigation)
 							.WithOne(p => p.ProductDetail)
-							.HasForeignKey<ProductDetail>(d => d.Id)
+							.HasForeignKey<ProductDetails>(d => d.Id)
 							.OnDelete(DeleteBehavior.ClientSetNull)
 							.HasConstraintName("FK_ProductDetails_Products");
 			});
 
-			modelBuilder.Entity<ProductsToCustomer>(entity =>
+			modelBuilder.Entity<ProductsToCustomers>(entity =>
 			{
 				entity.HasKey(e => new
 				{

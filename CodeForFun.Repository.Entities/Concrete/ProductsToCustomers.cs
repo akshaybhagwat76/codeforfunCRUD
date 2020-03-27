@@ -7,7 +7,7 @@ using CodeForFun.Core.Entities;
 
 namespace CodeForFun.Repository.Entities.Concrete
 {
-    public partial class ProductsToCustomer : IEntity
+    public partial class ProductsToCustomers : IEntity
     {
         public int ProductsToCustomerId { get; set; }
         [Key]

@@ -1,10 +1,7 @@
 ﻿using CodeForFun.Core.DataAccess.EFCore;
 using CodeForFun.Repository.DataAccess.Abstract;
 using CodeForFun.Repository.DataAccess.DbContexts;
-using CodeForFun.UI.WebMvcCore.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using CodeForFun.Repository.Entities.Concrete;
 
 namespace CodeForFun.Repository.DataAccess.Concrete.EFCore
 {

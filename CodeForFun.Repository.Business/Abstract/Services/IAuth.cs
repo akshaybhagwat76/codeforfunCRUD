@@ -1,8 +1,5 @@
-﻿using CodeForFun.UI.WebMvcCore.Models;
+﻿using CodeForFun.Repository.Entities.Concrete;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CodeForFun.Repository.Business.Abstract.Services
 {

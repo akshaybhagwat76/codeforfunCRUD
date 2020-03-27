@@ -19,7 +19,7 @@ namespace CodeForFun.Repository.DataAccess.Concrete
 		private IProduct _product;
 		private IUser _user;
 		private IProductDetails _productDetails;
-		private IProductsToCustomers _productsToCustomers;
+		private IProductsToCustomer _productsToCustomers;
 
 		public RepositoryWrapper(RepositoryContext context = null)
 		{
@@ -34,7 +34,7 @@ namespace CodeForFun.Repository.DataAccess.Concrete
 
 		public IProductDetails ProductDetails => _productDetails ?? new ProductDetailsRepository(_context);
 
-		public IProductsToCustomers ProductsToCustomers =>
+		public IProductsToCustomer ProductsToCustomers =>
 			_productsToCustomers ?? new ProductsToCustomersRepository(_context);
 
 		public IUser User => _user ?? new UserRepository(_context);

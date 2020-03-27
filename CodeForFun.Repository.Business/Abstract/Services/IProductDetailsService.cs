@@ -6,7 +6,7 @@ using System.Text;
 
 namespace CodeForFun.Repository.Business.Abstract.Services
 {
-	public interface IProductDetailsService : IService<ProductDetail>
+	public interface IProductDetailsService : IService<ProductDetails>
 	{
 	}
 }

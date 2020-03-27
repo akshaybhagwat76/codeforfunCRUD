@@ -8,7 +8,7 @@ using System.Text;
 
 namespace CodeForFun.Repository.DataAccess.Concrete.EFCore
 {
-	public class ProductsToCustomersRepository: GenereticRepository<ProductsToCustomer, RepositoryContext>, IProductsToCustomers
+	public class ProductsToCustomersRepository: GenereticRepository<ProductsToCustomers, RepositoryContext>, IProductsToCustomer
 	{
 		public ProductsToCustomersRepository(RepositoryContext context) : base(context) { }
 	}

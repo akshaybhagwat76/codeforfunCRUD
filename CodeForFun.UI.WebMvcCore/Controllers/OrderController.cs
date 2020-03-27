@@ -47,7 +47,7 @@ namespace CodeForFun.UI.WebMvcCore.Controllers
 
 		private List<OrderViewModel> GetOrders(int id, bool getAll = false)
 		{
-			var productsToCustomer = new List<ProductsToCustomer>();
+			var productsToCustomer = new List<ProductsToCustomers>();
 
 			if (getAll)
 			{

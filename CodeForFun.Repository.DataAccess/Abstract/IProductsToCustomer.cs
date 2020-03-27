@@ -6,7 +6,7 @@ using System.Text;
 
 namespace CodeForFun.Repository.DataAccess.Abstract
 {
-	public interface IProductsToCustomers: IGenereticRepository<ProductsToCustomer>
+	public interface IProductsToCustomer: IGenereticRepository<ProductsToCustomers>
 	{
 	}
 }

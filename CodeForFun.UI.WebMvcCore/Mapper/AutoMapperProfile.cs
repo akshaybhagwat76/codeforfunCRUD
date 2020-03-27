@@ -16,7 +16,7 @@ namespace CodeForFun.UI.WebMvcCore.Mapper
 			CreateMap<Product, ProductViewModel>()
 				 .ForMember(x => x.CategoryName, opt => opt.MapFrom(x => x.Category.Name))
 				  .ForMember(x => x.CategoryId, opt => opt.MapFrom(x => x.Category.Id));
-			CreateMap<ProductsToCustomer, ProductsToCustomerViewModel>();
+			CreateMap<ProductsToCustomers, ProductsToCustomerViewModel>();
 
 			CreateMap<ProductViewModel, Product>()
 				 .ForMember(x => x.CategoryId, opt => opt.MapFrom(x => x.CategoryId));

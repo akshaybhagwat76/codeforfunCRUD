@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CodeForFun.Repository.Business.Abstract.Services;
 using CodeForFun.Repository.DataAccess.DbContexts;
+using CodeForFun.Repository.Entities.Concrete;
 using CodeForFun.UI.WebMvcCore.Models;
 using CodeForFun.UI.WebMvcCore.Models.ViewModels;
 using Microsoft.AspNetCore.Http;

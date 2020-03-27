@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CodeForFun.Repository.Business.Abstract.Services
 {
-	public interface IProductsToCustomer : IService<ProductsToCustomer>, IServiceForQueryable<ProductsToCustomer>
+	public interface IProductsToCustomer : IService<ProductsToCustomers>, IServiceForQueryable<ProductsToCustomers>
 	{
 	}
 }

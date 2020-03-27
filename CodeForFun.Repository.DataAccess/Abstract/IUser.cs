@@ -1,8 +1,5 @@
 ﻿using CodeForFun.Core;
-using CodeForFun.UI.WebMvcCore.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using CodeForFun.Repository.Entities.Concrete;
 
 namespace CodeForFun.Repository.DataAccess.Abstract
 {

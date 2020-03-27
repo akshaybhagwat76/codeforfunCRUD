@@ -2,7 +2,7 @@
 using CodeForFun.Repository.Business.Abstract.Services;
 using CodeForFun.Repository.DataAccess.Abstract;
 using CodeForFun.Repository.DataAccess.DbContexts;
-using CodeForFun.UI.WebMvcCore.Models;
+using CodeForFun.Repository.Entities.Concrete;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;

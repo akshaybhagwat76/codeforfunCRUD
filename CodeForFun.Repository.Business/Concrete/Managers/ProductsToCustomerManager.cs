@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CodeForFun.Repository.Business.Concrete.Managers
 {
-	public class ProductsToCustomerManager : IProductsToCustomer
+	public class ProductsToCustomerManager : Abstract.Services.IProductsToCustomer
 	{
         private readonly IRepositoryWrapper _dal;
 
@@ -21,46 +21,46 @@ namespace CodeForFun.Repository.Business.Concrete.Managers
 
 
         // GET ASYNC
-        public async Task<ProductsToCustomer> GetAsync(int id)
+        public async Task<ProductsToCustomers> GetAsync(int id)
         {
             return await _dal.ProductsToCustomers.ReadAsync(p => p.ProductsToCustomerId== id);
         }
 
         // GET ALL ASYNC
-        public async Task<List<ProductsToCustomer>> GetListAsync()
+        public async Task<List<ProductsToCustomers>> GetListAsync()
         {
             return await _dal.ProductsToCustomers.ReadListAsync();
         }
 
 
         // ADD ASYNC
-        public async void AddAsync(ProductsToCustomer entity)
+        public async void AddAsync(ProductsToCustomers entity)
         {
             await Task.Run(() => { _dal.ProductsToCustomers.CreateAsync(entity); });
         }
 
         // ADD RANGE ASYNC
-        public async void AddRangeAsync(List<ProductsToCustomer> entities)
+        public async void AddRangeAsync(List<ProductsToCustomers> entities)
         {
             await Task.Run(() => { _dal.ProductsToCustomers.CreateRangeAsync(entities); });
         }
 
 
         // UPDATE ASYNC
-        public async void UpdateAsync(ProductsToCustomer entity)
+        public async void UpdateAsync(ProductsToCustomers entity)
         {
             await Task.Run(() => { _dal.ProductsToCustomers.UpdateAsync(entity); });
         }
 
         // UPDATE RANGE ASYNC
-        public async void UpdateRangeAsync(List<ProductsToCustomer> entities)
+        public async void UpdateRangeAsync(List<ProductsToCustomers> entities)
         {
             await Task.Run(() => { _dal.ProductsToCustomers.UpdateRangeAsync(entities); });
         }
 
 
         // DELETE ASYNC
-        public async void DeleteAsync(ProductsToCustomer productsToCustomer)
+        public async void DeleteAsync(ProductsToCustomers productsToCustomer)
         {
             await Task.Run(() => { _dal.ProductsToCustomers.DeleteAsync(productsToCustomer); });
         }
@@ -68,10 +68,10 @@ namespace CodeForFun.Repository.Business.Concrete.Managers
         // DELETE RANGE ASYNC
         public async void DeleteRangeAsync(IEnumerable<int> ids)
         {
-            await Task.Run(() => { _dal.ProductsToCustomers.DeleteRange(ids.Select(id => new ProductsToCustomer { ProductsToCustomerId = id }).ToList()); });
+            await Task.Run(() => { _dal.ProductsToCustomers.DeleteRange(ids.Select(id => new ProductsToCustomers { ProductsToCustomerId = id }).ToList()); });
         }
 
-        public async Task<List<ProductsToCustomer>> GetAllWithInclude(params Expression<Func<ProductsToCustomer, object>>[] includeProperties)
+        public async Task<List<ProductsToCustomers>> GetAllWithInclude(params Expression<Func<ProductsToCustomers, object>>[] includeProperties)
         {
             return await _dal.ProductsToCustomers.GetAllWithInclude(includeProperties);
         }
