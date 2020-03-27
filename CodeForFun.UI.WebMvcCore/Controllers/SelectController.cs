@@ -52,6 +52,14 @@ namespace CodeForFun.UI.WebMvcCore.Controllers
 
 						}
 						break;
+
+					default:
+						filesArr.Add(new SearchFile
+						{
+							FileName = file.Name,
+							FilePath = file.FileName,
+						});
+						break;
 				}
 						
 

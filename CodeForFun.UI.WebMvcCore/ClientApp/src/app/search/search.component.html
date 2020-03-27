@@ -68,7 +68,7 @@
       <tr *ngFor="let file of files | filter :{name:'',filt:filt}">
           <td >{{file.fileName}}</td>
           <td >{{file.filePath}}</td>
-          <td >{{file.value}}</td>
+          <td >{{file?.value}}</td>
       </tr>
   </tbody>
 </table>
