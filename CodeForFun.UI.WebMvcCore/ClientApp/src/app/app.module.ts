@@ -21,6 +21,7 @@ import { RegisterComponent } from './auth/register/register.component';
 import { AccountService } from './services/account.service';
 import { OrdersComponent } from './orders/orders.component';
 import { OrderService } from './services/order.service';
+import { ProductsDetailsComponent } from './productdetails/productdetails.component';
 
 
 let config = new AuthServiceConfig([
@@ -45,7 +46,8 @@ export function provideConfig() {
       HomeComponent,
       CounterComponent,
       FetchDataComponent,
-      ProductsComponent,
+    ProductsComponent,
+    ProductsDetailsComponent,
       CategoryComponent,
       OrdersComponent,
       LoginComponent,
@@ -63,7 +65,10 @@ export function provideConfig() {
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
-      { path: 'products', component: ProductsComponent}
+      { path: 'products', component: ProductsComponent },
+      { path: 'category', component: CategoryComponent },
+      { path: 'productdetails', component: ProductsDetailsComponent  },
+
     ])
   ],
   providers: [

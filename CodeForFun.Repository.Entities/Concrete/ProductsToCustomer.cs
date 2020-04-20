@@ -9,6 +9,8 @@ namespace CodeForFun.Repository.Entities.Concrete
 {
     public partial class ProductsToCustomer : IEntity
     {
+        [Key]
+        public int Id { get; set; }
         public int ProductsToCustomerId { get; set; }
         [Key]
         public int CustomerId { get; set; }

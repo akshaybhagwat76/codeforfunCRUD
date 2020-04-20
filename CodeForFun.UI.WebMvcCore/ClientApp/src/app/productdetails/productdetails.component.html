@@ -3,7 +3,7 @@
     <div class="table-title">
       <div class="row">
         <div class="col-sm-6">
-          <h2>Manage <b>Employees</b></h2>
+          <h2>Product <b>Details</b></h2>
         </div>
         <div class="col-sm-6">
           <a href="" (click)="OrdersMode('getAll')" *ngIf="!isOrdersShow && isProductsShow" class="btn btn-success" data-toggle="modal"> <span>Orders</span></a>
@@ -12,7 +12,7 @@
             <span>Add New Product</span>
 
           </a>
-          <a href="" [routerLink]="['/productdetails']" class="btn btn-success" data-toggle="modal">
+          <a href="" (click)="createProductDetail()" class="btn btn-success" data-toggle="modal">
             <span>Add New Detail</span>
 
           </a><br /><br /><br />

@@ -21,7 +21,7 @@ namespace CodeForFun.Repository.DataAccess.DbContexts
 		}
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-			optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=code-for-fun-db;Trusted_Connection=True");
+			optionsBuilder.UseSqlServer(@"Server=DESKTOP-NA7LG1A;Initial Catalog=code-for-fun-dbcrud;Persist Security Info=False;User ID=sa;Password=sa123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;");
 		}
 
 		public DbSet<User> Users { get; set; }

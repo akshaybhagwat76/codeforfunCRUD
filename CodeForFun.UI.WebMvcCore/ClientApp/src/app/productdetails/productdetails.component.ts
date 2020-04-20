@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../services/product.service';
 import { OrderService } from '../services/order.service';
-import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-products',
-  templateUrl: './products.component.html',
-  styleUrls: ['./products.component.css']
+  selector: 'app-productdetails',
+  templateUrl: './productdetails.component.html'
 })
-export class ProductsComponent implements OnInit {
+export class ProductsDetailsComponent implements OnInit {
   products: Array<Product> = [];
   filteredProducts: Array<Product> = [];
   isOrdersShow = false;
@@ -18,7 +16,7 @@ export class ProductsComponent implements OnInit {
   categoryName;
   productForEditOrCreate: any = {};
 
-  constructor(private productService: ProductService, private orderService: OrderService, private router: Router) {
+  constructor(private productService: ProductService, private orderService: OrderService) {
   }
 
   ngOnInit() {
@@ -95,9 +93,7 @@ export class ProductsComponent implements OnInit {
   }
 
   createProductDetail() {
-    debugger
     alert('hi')
-    this.router.navigate['productdetails'];
   }
 }
 
