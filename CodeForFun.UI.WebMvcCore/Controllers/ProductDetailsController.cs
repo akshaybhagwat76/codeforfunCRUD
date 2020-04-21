@@ -15,14 +15,17 @@ namespace CodeForFun.UI.WebMvcCore.Controllers
 	[ApiController]
 	public class ProductDetailsController : ControllerBase
 	{
-		private readonly IProductDetailsService _productService;
+		private readonly IProductDetailsService _productDetailService;
+		private readonly IProductService _productService;
+
 		private readonly IMapper _mapper;
 		private readonly ICategoryService _categoryService;
 
-		public ProductDetailsController(IProductDetailsService productService, ICategoryService categoryService, IMapper mapper)
+		public ProductDetailsController(IProductDetailsService productDetailService, IProductService productService, ICategoryService categoryService, IMapper mapper)
 		{
-			_productService = productService;
+			_productDetailService = productDetailService;
 			_categoryService = categoryService;
+			_productService = productService;
 			_mapper = mapper;
 		}
 
@@ -31,14 +34,25 @@ namespace CodeForFun.UI.WebMvcCore.Controllers
 		[Route("GetAll")]
 		public async Task<List<ProductDetail>> Get()
 		{
-			var products = await _productService.GetListAsync();
+			var products = await _productDetailService.GetListAsync();
+			if (products != null)
+			{
+				foreach (var item in products)
+				{
+					if (item.IdNavigation == null)
+					{
+						var product = await _productService.GetAsync(item.Id);
+						item.IdNavigation = product;
+					}
+				}
+			}
 			return _mapper.Map<List<ProductDetail>>(products);
 		}
 
 		[HttpGet]
 		public async Task<ProductDetail> Get(int id)
 		{
-			var product =await _productService.GetAsync(id);
+			var product =await _productDetailService.GetAsync(id);
 
 			if (product == null)
 				return null;
@@ -55,7 +69,7 @@ namespace CodeForFun.UI.WebMvcCore.Controllers
 				Description = product.Description
 			};
 
-			_productService.AddAsync(newProduct);
+			_productDetailService.AddAsync(newProduct);
 
 			return Ok();
 		}
@@ -66,7 +80,7 @@ namespace CodeForFun.UI.WebMvcCore.Controllers
 			if (product == null)
 				return BadRequest("Product is Null");
 
-			_productService.UpdateAsync(_mapper.Map<ProductDetail>(product));
+			_productDetailService.UpdateAsync(new ProductDetail { Description = product.Description,Id=product.Id});
 
 
 			return Ok();
@@ -75,11 +89,11 @@ namespace CodeForFun.UI.WebMvcCore.Controllers
 		[HttpDelete]
 		public IActionResult Delete(int productId)
 		{
-			var getProd = _productService.GetAsync(productId);
+			var getProd = _productDetailService.GetAsync(productId);
 
 			if (getProd.Result != null)
 			{
-				_productService.DeleteAsync(getProd.Result);
+				_productDetailService.DeleteAsync(getProd.Result);
 			}
 
 			return Ok();

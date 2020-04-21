@@ -31,7 +31,7 @@ namespace CodeForFun.UI.WebMvcCore.Controllers
 		{
 			var categories = await _categoryService.GetListAsync();
 
-			return _mapper.Map<IEnumerable<CategoryViewModel>>(categories.Where(x=>x.Parent == null));
+			return _mapper.Map<IEnumerable<CategoryViewModel>>(categories.Where(x=>x.Parent != null));
 		}
 
 		[HttpGet]

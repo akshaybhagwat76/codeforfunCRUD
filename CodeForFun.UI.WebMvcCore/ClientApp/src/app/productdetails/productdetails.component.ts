@@ -14,27 +14,35 @@ export class ProductsDetailsComponent implements OnInit {
   editMode = false;
   creatingMode = false;
   categoryName;
+  tableContainer: bool=true;
+  lstProducts: any;
   productForEditOrCreate: any = {};
 
   constructor(private productService: ProductService, private orderService: OrderService) {
   }
 
   ngOnInit() {
+    
     this.isProductsShow = true;
     this.fetch();
   }
 
   editModeForProduct(product) {
+    this.loadProducts();
     this.editMode = !this.editMode;
     this.productForEditOrCreate = product;
   }
 
   editProduct() {
-    console.log(this.productForEditOrCreate);
-    this.productService.edit(this.productForEditOrCreate).subscribe(x => {
-      this.editMode = !this.editMode;
-      this.fetch();
-    })
+    this.productService.editProductDetails(this.productForEditOrCreate).subscribe(x => {
+        this.editMode = false;
+      })
+  }
+
+  loadProducts() {
+    this.productService.loadCategories().subscribe((x => {
+      this.lstProducts = x;
+    }))
   }
 
   selectCategory($event) {
@@ -54,6 +62,8 @@ export class ProductsDetailsComponent implements OnInit {
   }
 
   createProductMode() {
+    this.tableContainer = false;  
+    this.loadProducts();
     this.creatingMode = !this.creatingMode;
   }
 
@@ -64,16 +74,14 @@ export class ProductsDetailsComponent implements OnInit {
     this.isOrdersShow = !this.isOrdersShow;
     this.isProductsShow = !this.isProductsShow;
   }
-
-  deleteProduct(productId) {
-    console.log(productId);
-    this.productService.delete(productId).subscribe(x => {
+  deleteProductDetail(productId) {
+    this.productService.deleteProductDetail(productId).subscribe(x => {
       this.fetch();
     })
-  }
 
+  }
   fetch() {
-    this.productService.loadCategories().subscribe((x: []) => {
+    this.productService.getAllProductDetails().subscribe((x: []) => {
       this.products = x;
       this.filteredProducts = x;
     })
@@ -84,17 +92,12 @@ export class ProductsDetailsComponent implements OnInit {
   }
 
   createProduct() {
-    this.productForEditOrCreate.categoryName = this.categoryName;
-
-    this.productService.add(this.productForEditOrCreate).subscribe(x => {
-      this.fetch();
-      this.creatingMode = !this.creatingMode;
-    })
+    //this.productService.addProductDetail(this.productForEditOrCreate).subscribe(x => {
+    //  this.fetch();
+    //  this.creatingMode = !this.creatingMode;
+    //})
   }
 
-  createProductDetail() {
-    alert('hi')
-  }
 }
 
 interface Product {

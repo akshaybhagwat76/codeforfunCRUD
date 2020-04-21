@@ -32,7 +32,6 @@ export class ProductsComponent implements OnInit {
   }
 
   editProduct() {
-    console.log(this.productForEditOrCreate);
     this.productService.edit(this.productForEditOrCreate).subscribe(x => {
       this.editMode = !this.editMode;
       this.fetch();
@@ -68,7 +67,6 @@ export class ProductsComponent implements OnInit {
   }
 
   deleteProduct(productId) {
-    console.log(productId);
     this.productService.delete(productId).subscribe(x => {
       this.fetch();
     })
@@ -87,7 +85,6 @@ export class ProductsComponent implements OnInit {
 
   createProduct() {
     this.productForEditOrCreate.categoryName = this.categoryName;
-
     this.productService.add(this.productForEditOrCreate).subscribe(x => {
       this.fetch();
       this.creatingMode = !this.creatingMode;
@@ -95,8 +92,6 @@ export class ProductsComponent implements OnInit {
   }
 
   createProductDetail() {
-    debugger
-    alert('hi')
     this.router.navigate['productdetails'];
   }
 }
