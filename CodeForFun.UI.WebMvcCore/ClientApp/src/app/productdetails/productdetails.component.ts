@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../services/product.service';
 import { OrderService } from '../services/order.service';
+//import { XmlHttpRequestHelper } from '../services/XmlHttpRequestHelper';
+//import { XMLHttpRequest } from 'xmlhttprequest-ts';
 
 @Component({
   selector: 'app-productdetails',
@@ -17,6 +19,7 @@ export class ProductsDetailsComponent implements OnInit {
   tableContainer: any;
   lstProducts: any;
   productForEditOrCreate: any = {};
+  ajaxResponse: string= '';
 
   constructor(private productService: ProductService, private orderService: OrderService) {
   }
@@ -80,6 +83,31 @@ export class ProductsDetailsComponent implements OnInit {
     this.productService.deleteProductDetail(productId).subscribe(x => {
       this.fetch();
     })  
+  }
+
+  doAjax(text:any) {
+    debugger
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        // Typical action to be performed when the document is ready:
+        alert( xhr.responseText);
+      }
+    };
+    xhr.open("GET", '/api/Ajax/Get?text=' + text.viewModel, true);
+    xhr.send();
+
+    //let customHeaders = {
+    //  'Authorization': 'Bearer ' + localStorage.getItem('token')
+    //};
+    //XmlHttpRequestHelper.ajax(
+    //  'POST',
+    //  '/api/Ajax/Get?text='+ text.viewModel,
+    //  customHeaders,
+    //  null,
+    //  () => {
+    //  }
+    //);
   }
 
   fetch() {

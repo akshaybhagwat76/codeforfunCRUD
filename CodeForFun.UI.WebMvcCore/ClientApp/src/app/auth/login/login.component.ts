@@ -47,7 +47,8 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
-    this.accountService.login(this.model).subscribe(x=>{
+    this.accountService.login(this.model).subscribe(x => {
+      localStorage.setItem('token', x.token);
       this.user.emit(this.model);
       this.visibility = false;
     })

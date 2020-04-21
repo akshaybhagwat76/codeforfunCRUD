@@ -36,6 +36,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\services\XmlHttpRequestHelper.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\CodeForFun.Repository.Business\CodeForFun.Repository.Business.csproj" />
     <ProjectReference Include="..\CodeForFun.Repository.Entities\CodeForFun.Repository.Entities.csproj" />
   </ItemGroup>
@@ -52,6 +56,10 @@
     <Folder Include="Areas\Identity\Views\" />
     <Folder Include="Dtos\" />
     <Folder Include="TagHelpers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\services\XmlHttpRequestHelper.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

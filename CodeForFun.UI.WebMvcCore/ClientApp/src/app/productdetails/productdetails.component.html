@@ -16,7 +16,7 @@
             <span>Add New Detail</span>
 
           </a>
-          <a [routerLink]="['/customers']"  class="btn btn-success" data-toggle="modal">
+          <a [routerLink]="['/customers']" class="btn btn-success" data-toggle="modal">
             <span>Add New Customer</span>
 
           </a><br /><br /><br />
@@ -75,8 +75,7 @@
             <div class="modal-body">
               <div class="form-group">
                 <label>Desciption</label>
-                <textarea class="form-control" #description="ngModel" required [(ngModel)]='productForEditOrCreate.description' name="description" rows="10" cols="15">                             
-</textarea>
+                <textarea class="form-control" #description="ngModel" required [(ngModel)]='productForEditOrCreate.description' name="description" rows="10" cols="15"></textarea>
                 <div *ngIf="description.invalid" class="text-danger">
                   <div *ngIf="description.errors.required">Description is required</div>
                 </div>
@@ -103,6 +102,11 @@
   </div>
 </div>
 <!-- Edit Modal HTML -->
+<form>
+  <label>Ajax</label>
+<textarea class="form-control" (keyup)="doAjax(projectName)" ngModel #projectName="ngModel" name="projectName" rows="10" cols="15"></textarea>
+  <span>{{ajaxResponse}}</span>
+</form>
 <!--Create Modal HTML -->
 <div id="editEmployeeModal" *ngIf="creatingMode">
   <div class="modal-dialog">
@@ -122,7 +126,7 @@
 
           </div>
           <div *ngIf="lstProducts.length==0">
-            <div  class="text-danger">
+            <div class="text-danger">
               <div class="text-bold">There is no product for add details</div>
             </div>
           </div>
