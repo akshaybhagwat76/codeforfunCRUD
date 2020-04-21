@@ -90,6 +90,8 @@ namespace CodeForFun.UI.WebMvcCore
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
             services.AddScoped<IProductService, ProductManager>();
             services.AddScoped<ICategoryService, CategoryManager>();
+            services.AddScoped<ICustomerService, CustomerManager>();
+
             services.AddScoped<IAuth, AuthManager>();
             services.AddTransient<IProductsToCustomer, ProductsToCustomerManager>();
             services.AddScoped<IProductDetailsService, ProductDetailsManager>();

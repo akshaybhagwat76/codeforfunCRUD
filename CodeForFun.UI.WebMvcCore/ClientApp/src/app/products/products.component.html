@@ -8,12 +8,16 @@
         <div class="col-sm-6">
           <a href="" (click)="OrdersMode('getAll')" *ngIf="!isOrdersShow && isProductsShow" class="btn btn-success" data-toggle="modal"> <span>Orders</span></a>
           <a href="" (click)="OrdersMode()" *ngIf="isOrdersShow && !isProductsShow" class="btn btn-success" data-toggle="modal"> <span>Products</span></a>
-          <a href="" (click)="createProductMode()" class="btn btn-success" data-toggle="modal">
+          <a  (click)="createProductMode()"  class="btn btn-success" data-toggle="modal">
             <span>Add New Product</span>
 
           </a>
-          <a href="" [routerLink]="['/productdetails']" class="btn btn-success" data-toggle="modal">
+          <a  [routerLink]="['/productdetails']" class="btn btn-success" data-toggle="modal">
             <span>Add New Detail</span>
+
+          </a>
+          <a [routerLink]="['/customers']" class="btn btn-success" data-toggle="modal">
+            <span>Add New Customer</span>
 
           </a><br /><br /><br />
           <app-category (selectedCategory)="selectCategory($event)"></app-category>

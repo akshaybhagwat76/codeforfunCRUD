@@ -17,7 +17,6 @@ export class CategoryComponent implements OnInit {
       x.forEach(y=>{
         this.categories.push(y);
       })
-      console.log(this.categories)
     })
   }
 

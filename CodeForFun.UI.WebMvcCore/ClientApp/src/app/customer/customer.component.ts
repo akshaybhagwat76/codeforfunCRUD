@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../services/product.service';
 import { OrderService } from '../services/order.service';
+import { CustomerService } from '../services/customer.service';
 
 @Component({
-  selector: 'app-productdetails',
-  templateUrl: './productdetails.component.html'
+  selector: 'app-customer',
+  templateUrl: './customer.component.html',
+  styleUrls: ['./customer.component.css']
 })
-export class ProductsDetailsComponent implements OnInit {
+export class CustomerComponent implements OnInit {
+
   products: Array<Product> = [];
   filteredProducts: Array<Product> = [];
   isOrdersShow = false;
@@ -18,7 +21,7 @@ export class ProductsDetailsComponent implements OnInit {
   lstProducts: any;
   productForEditOrCreate: any = {};
 
-  constructor(private productService: ProductService, private orderService: OrderService) {
+  constructor(private productService: ProductService, private orderService: OrderService, private customerService: CustomerService) {
   }
 
   ngOnInit() {
@@ -28,22 +31,16 @@ export class ProductsDetailsComponent implements OnInit {
   }
 
   editModeForProduct(product) {
-    this.loadProducts();
     this.editMode = !this.editMode;
     this.productForEditOrCreate = product;
   }
 
   editProduct() {
-    this.productService.editProductDetails(this.productForEditOrCreate).subscribe(x => {
-        this.editMode = false;
-      })
+    this.customerService.editProductDetails(this.productForEditOrCreate).subscribe(x => {
+      this.editMode = false;
+    })
   }
 
-  loadProducts() {
-    this.productService.loadProducts().subscribe((x => {
-      this.lstProducts = x;
-    }))
-  }
 
   selectCategory($event) {
     this.filteredProducts = this.products;
@@ -62,10 +59,8 @@ export class ProductsDetailsComponent implements OnInit {
   }
 
   createProductMode() {
-    this.tableContainer = false;  
-    this.loadProducts();
+    this.tableContainer = false;
     this.productForEditOrCreate = {};
-    this.productForEditOrCreate.idNavigation = {};
     this.creatingMode = !this.creatingMode;
   }
 
@@ -77,13 +72,14 @@ export class ProductsDetailsComponent implements OnInit {
     this.isProductsShow = !this.isProductsShow;
   }
   deleteProductDetail(productId) {
-    this.productService.deleteProductDetail(productId).subscribe(x => {
+    debugger
+    this.customerService.deleteProductDetail(productId).subscribe(x => {
       this.fetch();
-    })  
+    })
   }
 
   fetch() {
-    this.productService.getAllProductDetails().subscribe((x: []) => {
+    this.customerService.getAllProductDetails().subscribe((x: []) => {
       this.products = x;
       this.filteredProducts = x;
     })
@@ -93,15 +89,15 @@ export class ProductsDetailsComponent implements OnInit {
     this.categoryName = $event;
   }
 
-  createProduct() {
-    this.productService.addProductDetail(this.productForEditOrCreate).subscribe(x => {
+  createCustomer() {
+    this.customerService.addProductDetail(this.productForEditOrCreate).subscribe(x => {
       this.fetch();
-      this.creatingMode = !this.creatingMode;
+      this.creatingMode = false;
+      this.tableContainer = true;
+
     })
   }
-
 }
-
 interface Product {
   id: any;
   code?: string;

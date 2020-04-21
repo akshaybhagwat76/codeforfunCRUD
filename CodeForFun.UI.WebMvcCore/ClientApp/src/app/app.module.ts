@@ -22,6 +22,8 @@ import { AccountService } from './services/account.service';
 import { OrdersComponent } from './orders/orders.component';
 import { OrderService } from './services/order.service';
 import { ProductsDetailsComponent } from './productdetails/productdetails.component';
+import { CustomerService } from './services/customer.service';
+import { CustomerComponent } from './customer/customer.component';
 
 
 let config = new AuthServiceConfig([
@@ -51,8 +53,8 @@ export function provideConfig() {
       CategoryComponent,
       OrdersComponent,
       LoginComponent,
-      RegisterComponent,
-      OrdersComponent
+    RegisterComponent,
+    OrdersComponent, CustomerComponent
    ],
    imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -67,7 +69,8 @@ export function provideConfig() {
       { path: 'counter', component: CounterComponent },
       { path: 'products', component: ProductsComponent },
       { path: 'category', component: CategoryComponent },
-      { path: 'productdetails', component: ProductsDetailsComponent  },
+      { path: 'productdetails', component: ProductsDetailsComponent },
+      { path: 'customers', component: CustomerComponent }
 
     ])
   ],
@@ -81,8 +84,8 @@ export function provideConfig() {
     CategoryService,
     ProductService,
     AccountService,
-    OrderService
-    
+    OrderService,
+    CustomerService
   ],
   bootstrap: [AppComponent]
 })
