@@ -14,7 +14,7 @@ export class ProductsDetailsComponent implements OnInit {
   editMode = false;
   creatingMode = false;
   categoryName;
-  tableContainer: bool=true;
+  tableContainer: any;
   lstProducts: any;
   productForEditOrCreate: any = {};
 
@@ -22,7 +22,7 @@ export class ProductsDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+    this.tableContainer = true;
     this.isProductsShow = true;
     this.fetch();
   }
@@ -40,7 +40,7 @@ export class ProductsDetailsComponent implements OnInit {
   }
 
   loadProducts() {
-    this.productService.loadCategories().subscribe((x => {
+    this.productService.loadProducts().subscribe((x => {
       this.lstProducts = x;
     }))
   }
@@ -62,8 +62,12 @@ export class ProductsDetailsComponent implements OnInit {
   }
 
   createProductMode() {
+    debugger
     this.tableContainer = false;  
     this.loadProducts();
+    debugger
+    this.productForEditOrCreate = {};
+    this.productForEditOrCreate.idNavigation = {};
     this.creatingMode = !this.creatingMode;
   }
 
@@ -77,9 +81,9 @@ export class ProductsDetailsComponent implements OnInit {
   deleteProductDetail(productId) {
     this.productService.deleteProductDetail(productId).subscribe(x => {
       this.fetch();
-    })
-
+    })  
   }
+
   fetch() {
     this.productService.getAllProductDetails().subscribe((x: []) => {
       this.products = x;
@@ -92,10 +96,13 @@ export class ProductsDetailsComponent implements OnInit {
   }
 
   createProduct() {
-    //this.productService.addProductDetail(this.productForEditOrCreate).subscribe(x => {
-    //  this.fetch();
-    //  this.creatingMode = !this.creatingMode;
-    //})
+    debugger
+    let p = this.productForEditOrCreate;
+    this.productForEditOrCreate.id = "2";
+    this.productService.addProductDetail(this.productForEditOrCreate).subscribe(x => {
+      this.fetch();
+      this.creatingMode = !this.creatingMode;
+    })
   }
 
 }

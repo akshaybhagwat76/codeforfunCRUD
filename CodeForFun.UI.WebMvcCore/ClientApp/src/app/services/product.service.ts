@@ -21,6 +21,19 @@ export class ProductService {
 
   }
 
+
+  loadProducts() {
+    const sub = new Subject<any>();
+
+    this.http.get('/api/productdetails/GetAllProducts').subscribe(x => {
+      sub.next(x)
+      sub.complete();
+    })
+
+    return sub;
+
+  }
+
   edit(product) {
     const sub = new Subject<any>();
 

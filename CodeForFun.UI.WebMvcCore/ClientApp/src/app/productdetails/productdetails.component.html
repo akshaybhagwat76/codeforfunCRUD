@@ -63,7 +63,7 @@
     <div id="editEmployeeModal" *ngIf="editMode">
       <div class="modal-dialog">
         <div class="modal-content">
-          <form name="form" (ngSubmit)="f.form.valid && editProduct()" #f="ngForm" >
+          <form name="form" (ngSubmit)="f.form.valid && editProduct()" #f="ngForm">
             <div class="modal-header">
               <h4 class="modal-title">Edit Product Detail</h4>
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="editMode = !editMode">&times;</button>
@@ -76,11 +76,11 @@
                 <div *ngIf="description.invalid" class="text-danger">
                   <div *ngIf="description.errors.required">Description is required</div>
                 </div>
-               
+
               </div>
               <div class="form-group">
                 <label>Product</label>
-                <select class="form-control" #productId="ngModel" required [(ngModel)]="productForEditOrCreate.idNavigation.id" name="product">
+                <select class="form-control" disabled #productId="ngModel" required [(ngModel)]="productForEditOrCreate.idNavigation.id" name="product">
                   <option *ngFor="let c of lstProducts" [ngValue]="c.id">{{c.name}}</option>
                 </select>
                 <div *ngIf="productId.invalid" class="text-danger">
@@ -106,19 +106,24 @@
       <form name="form" (ngSubmit)="f.form.valid && createProduct()" #f="ngForm">
         <div class="modal-header">
           <h4 class="modal-title">Add Product Detail</h4>
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="editMode = !editMode">&times;</button>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="creatingMode = !creatingMode">&times;</button>
         </div>
         <div class="modal-body">
           <div class="form-group">
             <label>Desciption</label>
-            <textarea class="form-control" #description="ngModel" required [(ngModel)]='productForEditOrCreate.description' name="description" rows="10" cols="15">                             
-</textarea>
+            <textarea class="form-control" #description="ngModel" required [(ngModel)]='productForEditOrCreate.description' name="description" rows="10" cols="15"></textarea>
             <div *ngIf="description.invalid" class="text-danger">
               <div *ngIf="description.errors.required">Description is required</div>
             </div>
 
           </div>
-          <div class="form-group">
+          <div *ngIf="lstProducts.length==0">
+            <div  class="text-danger">
+              <div class="text-bold">There is no product for add details</div>
+            </div>
+          </div>
+
+          <div class="form-group" *ngIf="lstProducts.length>0">
             <label>Product</label>
             <select class="form-control" #productId="ngModel" required [(ngModel)]="productForEditOrCreate.idNavigation.id" name="product">
               <option *ngFor="let c of lstProducts" [ngValue]="c.id">{{c.name}}</option>
@@ -129,8 +134,8 @@
           </div>
         </div>
         <div class="modal-footer">
-          <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel" (click)="editMode = !editMode">
-          <input type="submit" [disabled]="!f.valid" class="btn btn-info" value="Save" (click)="editProduct()">
+          <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel" (click)="creatingMode = !creatingMode">
+          <input type="submit" [disabled]="!f.valid" class="btn btn-info" value="Save" (click)="createProduct()">
         </div>
       </form>
     </div>

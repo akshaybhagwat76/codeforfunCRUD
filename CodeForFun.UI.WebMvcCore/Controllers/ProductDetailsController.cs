@@ -29,6 +29,16 @@ namespace CodeForFun.UI.WebMvcCore.Controllers
 			_mapper = mapper;
 		}
 
+		[HttpGet]
+		[Route("GetAllProducts")]
+		public async Task<List<Product>> GetProducts()
+		{
+			var productDetails = await _productDetailService.GetListAsync();
+			var products = await _productService.GetListAsync();
+			products = products.Where(x => !productDetails.Any(y => y.Id == x.Id)).ToList();
+			return products;
+		}
+
 		// GET: api/Product
 		[HttpGet]
 		[Route("GetAll")]
@@ -66,6 +76,7 @@ namespace CodeForFun.UI.WebMvcCore.Controllers
 		{
 			var newProduct = new ProductDetail()
 			{
+				Id= product.Id,
 				Description = product.Description
 			};
 
