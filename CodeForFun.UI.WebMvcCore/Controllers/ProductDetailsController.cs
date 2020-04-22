@@ -58,7 +58,12 @@ namespace CodeForFun.UI.WebMvcCore.Controllers
 			}
 			return _mapper.Map<List<ProductDetail>>(products);
 		}
-
+		[HttpGet]
+		[Route("Ajax")]
+		public IActionResult ReturnAjax(string text)
+		{
+			return Ok(text);
+		}
 		[HttpGet]
 		public async Task<ProductDetail> Get(int id)
 		{

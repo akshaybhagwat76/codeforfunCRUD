@@ -104,8 +104,8 @@
 <!-- Edit Modal HTML -->
 <form>
   <label>Ajax</label>
+  <span class="font-bold">{{ajaxResponse}}</span>
 <textarea class="form-control" (keyup)="doAjax(projectName)" ngModel #projectName="ngModel" name="projectName" rows="10" cols="15"></textarea>
-  <span>{{ajaxResponse}}</span>
 </form>
 <!--Create Modal HTML -->
 <div id="editEmployeeModal" *ngIf="creatingMode">

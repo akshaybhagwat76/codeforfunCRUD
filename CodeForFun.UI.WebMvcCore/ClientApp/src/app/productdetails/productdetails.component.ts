@@ -85,29 +85,21 @@ export class ProductsDetailsComponent implements OnInit {
     })  
   }
 
+  //Ajax function on key up event
+
   doAjax(text:any) {
-    debugger
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
         // Typical action to be performed when the document is ready:
-        alert( xhr.responseText);
+        alert(xhr.responseText);
       }
     };
-    xhr.open("GET", '/api/Ajax/Get?text=' + text.viewModel, true);
+    xhr.open("GET", '/api/ProductDetails/Ajax?text=' + text.viewModel, true);
     xhr.send();
-
-    //let customHeaders = {
-    //  'Authorization': 'Bearer ' + localStorage.getItem('token')
-    //};
-    //XmlHttpRequestHelper.ajax(
-    //  'POST',
-    //  '/api/Ajax/Get?text='+ text.viewModel,
-    //  customHeaders,
-    //  null,
-    //  () => {
-    //  }
-    //);
+  }
+  setSpan(text: any) {
+    this.ajaxResponse = text;
   }
 
   fetch() {
