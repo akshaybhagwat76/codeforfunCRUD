@@ -39,7 +39,6 @@ export class ProductsComponent implements OnInit {
   }
 
   editProduct() {
-    console.log(this.productForEditOrCreate);
     this.productService.edit(this.productForEditOrCreate).subscribe(x => {
       this.editMode = !this.editMode;
       this.fetch();
@@ -121,12 +120,12 @@ export class ProductsComponent implements OnInit {
 
   createProduct() {
     this.productForEditOrCreate.categoryName = this.categoryName;
-
     this.productService.add(this.productForEditOrCreate).subscribe(x => {
       this.fetch();
       this.creatingMode = !this.creatingMode;
     })
   }
+
 }
 
 interface Product {
