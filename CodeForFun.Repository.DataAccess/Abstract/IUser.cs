@@ -1,4 +1,5 @@
 ﻿using CodeForFun.Core;
+using CodeForFun.Repository.Entities.Concrete;
 using CodeForFun.UI.WebMvcCore.Models;
 using System;
 using System.Collections.Generic;
@@ -9,5 +10,7 @@ namespace CodeForFun.Repository.DataAccess.Abstract
 	public interface IUser:IGenereticRepository<User>
 	{
 		public bool CheckRole(string username, string role);
+		public Role GetUserRole();
+
 	}
 }

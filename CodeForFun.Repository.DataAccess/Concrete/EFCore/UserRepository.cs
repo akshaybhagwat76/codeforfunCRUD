@@ -1,6 +1,7 @@
 ﻿using CodeForFun.Core.DataAccess.EFCore;
 using CodeForFun.Repository.DataAccess.Abstract;
 using CodeForFun.Repository.DataAccess.DbContexts;
+using CodeForFun.Repository.Entities.Concrete;
 using CodeForFun.UI.WebMvcCore.Models;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,11 @@ namespace CodeForFun.Repository.DataAccess.Concrete.EFCore
         {
             var p = _context.Users.SingleOrDefault(x => x.Name == username && x.Role.Name == role);
             return p == null ? false : true;
+        }
+
+        public Role GetUserRole()
+        {
+            return _context.Roles.Where(x => x.Name == "User").FirstOrDefault();
         }
 
 

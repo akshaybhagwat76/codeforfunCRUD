@@ -11,17 +11,21 @@ namespace CodeForFun.Repository.DataAccess.DbContexts
 {
 	public partial class RepositoryContext : DbContext
 	{
+		
 		public RepositoryContext(DbContextOptions<RepositoryContext> options) : base(options)
 		{
-
 		}
 		public RepositoryContext()
 		{
 			Database.EnsureCreated();
+			this.Roles.Add(new Role { Name = "Admin" });
+			this.Roles.Add(new Role { Name = "Member" });
+			this.Roles.Add(new Role { Name = "User" });
+			this.SaveChanges();
 		}
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-			optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=code-for-fun-db;Trusted_Connection=True");
+			optionsBuilder.UseSqlServer(@"Server=DESKTOP-NA7LG1A;Initial Catalog=code-for-crud;Persist Security Info=False;User ID=sa;Password=sa123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;");
 		}
 
 		public DbSet<User> Users { get; set; }
@@ -58,7 +62,7 @@ namespace CodeForFun.Repository.DataAccess.DbContexts
 				.HasOne(x => x.Role)
 				.WithMany(x => x.Users)
 				.HasForeignKey(x => x.RoleId);
-				
+
 			});
 
 
@@ -112,6 +116,18 @@ namespace CodeForFun.Repository.DataAccess.DbContexts
 									.OnDelete(DeleteBehavior.ClientSetNull)
 									.HasConstraintName("FK_ProductsToCustomers_Products");
 			});
+
+		
+			modelBuilder.Entity<Role>().HasData(new[]{
+   new Role {
+	  RoleID = 1, // Must be != 0
+      Name = "Admin",
+   },
+   new Role {
+	  RoleID = 2, // Must be != 0
+      Name = "User",
+   }
+});
 
 			OnModelCreatingPartial(modelBuilder);
 		}
