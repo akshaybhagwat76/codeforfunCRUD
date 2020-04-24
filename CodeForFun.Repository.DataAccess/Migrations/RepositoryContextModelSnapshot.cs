@@ -133,6 +133,21 @@ namespace CodeForFun.Repository.DataAccess.Migrations
                     b.ToTable("ProductsToCustomers");
                 });
 
+            modelBuilder.Entity("CodeForFun.Repository.Entities.Concrete.Role", b =>
+                {
+                    b.Property<int>("RoleID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("RoleID");
+
+                    b.ToTable("Roles");
+                });
+
             modelBuilder.Entity("CodeForFun.UI.WebMvcCore.Models.User", b =>
                 {
                     b.Property<Guid>("UserID")
@@ -154,10 +169,15 @@ namespace CodeForFun.Repository.DataAccess.Migrations
                     b.Property<byte[]>("PasswordSalt")
                         .HasColumnType("varbinary(max)");
 
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Surname")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserID");
+
+                    b.HasIndex("RoleId");
 
                     b.ToTable("Users");
                 });
@@ -201,6 +221,15 @@ namespace CodeForFun.Repository.DataAccess.Migrations
                         .WithMany("ProductsToCustomers")
                         .HasForeignKey("ProductId")
                         .HasConstraintName("FK_ProductsToCustomers_Products")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("CodeForFun.UI.WebMvcCore.Models.User", b =>
+                {
+                    b.HasOne("CodeForFun.Repository.Entities.Concrete.Role", "Role")
+                        .WithMany("Users")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

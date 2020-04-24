@@ -51,7 +51,6 @@ namespace CodeForFun.UI.WebMvcCore.Controllers
 		public async Task<IActionResult> Post(ProductViewModel product)
 		{
 			var category = await _categoryService.GetByName(product.CategoryName);
-
 			var newProduct = new Product()
 			{
 				CategoryId = Convert.ToInt16(category.Id),
@@ -59,7 +58,11 @@ namespace CodeForFun.UI.WebMvcCore.Controllers
 				DateRegister = DateTime.Now,
 				IsActive = product.IsActive,
 				UnitPrice = product.UnitPrice,
-				Name = product.Name
+				Name = product.Name,
+				ProductDetail = new ProductDetail
+				{
+					Description = product.Description
+				}
 			};
 
 			_productService.AddAsync(newProduct);

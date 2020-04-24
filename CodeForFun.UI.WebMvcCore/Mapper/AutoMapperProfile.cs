@@ -13,6 +13,10 @@ namespace CodeForFun.UI.WebMvcCore.Mapper
 		public AutoMapperProfile()
 		{
 			CreateMap<Category, CategoryViewModel>();
+			CreateMap<Category, CategoryViewModelWithParent>()
+				.ForMember(x => x.ParentId, opt => opt.MapFrom(y => y.ParentId))
+				.ForMember(x => x.ParentName, opt => opt.MapFrom(y => y.Parent.Name));
+
 			CreateMap<Product, ProductViewModel>()
 				 .ForMember(x => x.CategoryName, opt => opt.MapFrom(x => x.Category.Name))
 				  .ForMember(x => x.CategoryId, opt => opt.MapFrom(x => x.Category.Id));

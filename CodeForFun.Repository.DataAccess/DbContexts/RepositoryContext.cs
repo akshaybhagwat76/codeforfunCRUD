@@ -11,13 +11,17 @@ namespace CodeForFun.Repository.DataAccess.DbContexts
 {
 	public partial class RepositoryContext : DbContext
 	{
+		
 		public RepositoryContext(DbContextOptions<RepositoryContext> options) : base(options)
 		{
-
 		}
 		public RepositoryContext()
 		{
 			Database.EnsureCreated();
+			this.Roles.Add(new Role { Name = "Admin" });
+			this.Roles.Add(new Role { Name = "Member" });
+			this.Roles.Add(new Role { Name = "User" });
+			this.SaveChanges();
 		}
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
@@ -25,6 +29,7 @@ namespace CodeForFun.Repository.DataAccess.DbContexts
 		}
 
 		public DbSet<User> Users { get; set; }
+		public DbSet<Role>Roles { get; set; }
 		public DbSet<Category> Categories { get; set; }
 		public DbSet<Customer> Customers { get; set; }
 		public DbSet<Product> Products { get; set; }
@@ -50,6 +55,16 @@ namespace CodeForFun.Repository.DataAccess.DbContexts
 
 				entity.Property(e => e.Surname).IsUnicode(false);
 			});
+
+			modelBuilder.Entity<User>(entity =>
+			{
+				entity
+				.HasOne(x => x.Role)
+				.WithMany(x => x.Users)
+				.HasForeignKey(x => x.RoleId);
+
+			});
+
 
 			modelBuilder.Entity<Product>(entity =>
 			{
@@ -101,6 +116,18 @@ namespace CodeForFun.Repository.DataAccess.DbContexts
 									.OnDelete(DeleteBehavior.ClientSetNull)
 									.HasConstraintName("FK_ProductsToCustomers_Products");
 			});
+
+		
+			modelBuilder.Entity<Role>().HasData(new[]{
+   new Role {
+	  RoleID = 1, // Must be != 0
+      Name = "Admin",
+   },
+   new Role {
+	  RoleID = 2, // Must be != 0
+      Name = "User",
+   }
+});
 
 			OnModelCreatingPartial(modelBuilder);
 		}

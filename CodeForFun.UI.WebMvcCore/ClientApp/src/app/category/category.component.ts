@@ -9,6 +9,7 @@ import { CategoryService } from '../services/category.service';
 export class CategoryComponent implements OnInit {
   @Input() categories:Array<Category> = [];
   @Output()selectedCategory = new EventEmitter();
+  @Input() isOnlyParents = false;
 
   constructor(private categoryService:CategoryService) { }
 

@@ -21,9 +21,9 @@ import { RegisterComponent } from './auth/register/register.component';
 import { AccountService } from './services/account.service';
 import { OrdersComponent } from './orders/orders.component';
 import { OrderService } from './services/order.service';
-import { ProductsDetailsComponent } from './productdetails/productdetails.component';
-import { CustomerService } from './services/customer.service';
-import { CustomerComponent } from './customer/customer.component';
+import { ProductsToCustomerComponent } from './productsToCustomer/productsToCustomer.component';
+import { CategoryTableComponent } from './category/category-table/category-table.component';
+import { AuthGuard } from './guards/authGuard.service';
 
 
 let config = new AuthServiceConfig([
@@ -49,15 +49,16 @@ export function provideConfig() {
       CounterComponent,
       FetchDataComponent,
     ProductsComponent,
-    ProductsDetailsComponent,
       CategoryComponent,
       OrdersComponent,
       LoginComponent,
-    RegisterComponent,
-    OrdersComponent, CustomerComponent
+      RegisterComponent,
+      OrdersComponent,
+      ProductsToCustomerComponent,
+      CategoryTableComponent
    ],
    imports: [
-    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+      BrowserModule,
     HttpClientModule,
     FormsModule,
     RecaptchaModule,
@@ -67,11 +68,7 @@ export function provideConfig() {
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
-      { path: 'products', component: ProductsComponent },
-      { path: 'category', component: CategoryComponent },
-      { path: 'productdetails', component: ProductsDetailsComponent },
-      { path: 'customers', component: CustomerComponent }
-
+      { path: 'products', component: ProductsComponent,canActivate:[AuthGuard],data:{role:"contentEditor"}}
     ])
   ],
   providers: [
@@ -85,7 +82,9 @@ export function provideConfig() {
     ProductService,
     AccountService,
     OrderService,
-    CustomerService
+    CategoryTableComponent,
+    AuthGuard
+    
   ],
   bootstrap: [AppComponent]
 })

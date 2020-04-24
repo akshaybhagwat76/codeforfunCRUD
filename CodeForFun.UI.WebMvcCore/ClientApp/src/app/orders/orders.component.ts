@@ -8,6 +8,9 @@ import { OrderService } from '../services/order.service';
 })
 export class OrdersComponent implements OnInit {
   orders: Array<Order> = [];
+  editMode = true;
+  orderForEditOrCreate:any = {};
+  creatingMode = true;
   constructor(private orderService: OrderService) { }
 
   ngOnInit() {
@@ -22,6 +25,10 @@ export class OrdersComponent implements OnInit {
           this.orders.push(elemet)
         })
       })
+  }
+
+  editOrder(){
+
   }
 
 }

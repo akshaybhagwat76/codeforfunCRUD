@@ -14,7 +14,6 @@ export class ProductService {
 
     this.http.get('/api/product/GetAll').subscribe(x => {
       sub.next(x)
-      sub.complete();
     })
 
     return sub;
