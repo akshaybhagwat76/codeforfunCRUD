@@ -11,5 +11,7 @@ namespace CodeForFun.Repository.Business.Abstract.Services
 		SecurityToken Login(string username, string password);
 		string Register(User ss, string password);
 
+		bool CheckRole(string username, string role);
+
 	}
 }

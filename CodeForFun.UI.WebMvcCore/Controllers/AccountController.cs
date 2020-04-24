@@ -78,6 +78,14 @@ namespace CodeForFun.UI.WebMvcCore.Controllers
 			});
 		}
 
+		[HttpGet]
+		[Route("checkRole")]
+		public IActionResult CheckRole(string username, string role)
+		{
+			return Ok(_auth.CheckRole(username, role));
+		}
+
+
 
 
 	}

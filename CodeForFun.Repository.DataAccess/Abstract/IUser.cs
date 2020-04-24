@@ -8,5 +8,6 @@ namespace CodeForFun.Repository.DataAccess.Abstract
 {
 	public interface IUser:IGenereticRepository<User>
 	{
+		public bool CheckRole(string username, string role);
 	}
 }

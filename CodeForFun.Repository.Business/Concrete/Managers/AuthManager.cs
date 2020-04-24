@@ -56,7 +56,7 @@ namespace CodeForFun.Repository.Business.Concrete.Managers
 		{
 				var p = _repo.User.Get(x => x.Email == username);
 
-			if (p == null)
+			if (p.Result == null)
 				return null;
 			if (!VerifyPasswordHash(password, p.Result.PasswordHash, p.Result.PasswordSalt))
 				return null;
@@ -89,7 +89,7 @@ namespace CodeForFun.Repository.Business.Concrete.Managers
 		{
 			var p = _repo.User.Get(x => x.Email == ss.Email);
 
-			if (p == null)
+			if (p.Result == null)
 			{
 				try
 				{
@@ -109,6 +109,12 @@ namespace CodeForFun.Repository.Business.Concrete.Managers
 
 			return "";
 		}
+
+		public bool CheckRole(string username, string role)
+		{
+			return _repo.User.CheckRole(username, role);
+		}
+
 
 	}
 }

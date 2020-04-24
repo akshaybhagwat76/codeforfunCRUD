@@ -16,7 +16,6 @@ constructor(private http: HttpClient) { }
 
     this.http.get('/api/Order?id='+id).subscribe(x => {
       sub.next(x)
-      sub.complete();
     })
 
     return sub;
@@ -28,7 +27,6 @@ constructor(private http: HttpClient) { }
 
     this.http.get('/api/order/getAll').subscribe(x => {
       sub.next(x)
-      sub.complete();
     })
 
     return sub;

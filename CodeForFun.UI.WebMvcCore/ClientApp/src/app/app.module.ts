@@ -21,6 +21,9 @@ import { RegisterComponent } from './auth/register/register.component';
 import { AccountService } from './services/account.service';
 import { OrdersComponent } from './orders/orders.component';
 import { OrderService } from './services/order.service';
+import { ProductsToCustomerComponent } from './productsToCustomer/productsToCustomer.component';
+import { CategoryTableComponent } from './category/category-table/category-table.component';
+import { AuthGuard } from './guards/authGuard.service';
 
 
 let config = new AuthServiceConfig([
@@ -50,10 +53,12 @@ export function provideConfig() {
       OrdersComponent,
       LoginComponent,
       RegisterComponent,
-      OrdersComponent
+      OrdersComponent,
+      ProductsToCustomerComponent,
+      CategoryTableComponent
    ],
    imports: [
-    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+      BrowserModule,
     HttpClientModule,
     FormsModule,
     RecaptchaModule,
@@ -63,7 +68,7 @@ export function provideConfig() {
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
-      { path: 'products', component: ProductsComponent}
+      { path: 'products', component: ProductsComponent,canActivate:[AuthGuard],data:{role:"contentEditor"}}
     ])
   ],
   providers: [
@@ -76,7 +81,9 @@ export function provideConfig() {
     CategoryService,
     ProductService,
     AccountService,
-    OrderService
+    OrderService,
+    CategoryTableComponent,
+    AuthGuard
     
   ],
   bootstrap: [AppComponent]

@@ -56,6 +56,22 @@ export class AccountService {
     return sub;
   }
 
+  checkRole(role){
+    const sub = new Subject();
+    this.localStoraService.getItem('userToken').subscribe((x: any) => {
+
+      if (x) {
+        this.userName = x.userName
+        this.http.get('/api/auth/checkRole?username=' + this.userName + '&role=' + role).subscribe(x => {
+          sub.next(x);
+          sub.complete();
+        })
+      }
+    })
+    return sub;
+
+  }
+
   logOut() {
     const sub = new Subject<any>();
     this.localStoraService.removeItem('userToken').subscribe(x => {

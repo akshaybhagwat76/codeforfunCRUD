@@ -25,6 +25,7 @@ namespace CodeForFun.Repository.DataAccess.DbContexts
 		}
 
 		public DbSet<User> Users { get; set; }
+		public DbSet<Role>Roles { get; set; }
 		public DbSet<Category> Categories { get; set; }
 		public DbSet<Customer> Customers { get; set; }
 		public DbSet<Product> Products { get; set; }
@@ -50,6 +51,16 @@ namespace CodeForFun.Repository.DataAccess.DbContexts
 
 				entity.Property(e => e.Surname).IsUnicode(false);
 			});
+
+			modelBuilder.Entity<User>(entity =>
+			{
+				entity
+				.HasOne(x => x.Role)
+				.WithMany(x => x.Users)
+				.HasForeignKey(x => x.RoleId);
+				
+			});
+
 
 			modelBuilder.Entity<Product>(entity =>
 			{

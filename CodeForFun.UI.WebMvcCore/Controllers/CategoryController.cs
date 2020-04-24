@@ -31,8 +31,20 @@ namespace CodeForFun.UI.WebMvcCore.Controllers
 		{
 			var categories = await _categoryService.GetListAsync();
 
-			return _mapper.Map<IEnumerable<CategoryViewModel>>(categories.Where(x=>x.Parent == null));
+			return _mapper.Map<IEnumerable<CategoryViewModel>>(categories.Where(x => x.Parent == null));
 		}
+
+
+		// GET: api/Category
+		[HttpGet]
+		[Route("GetAllWithParents")]
+		public async Task<IEnumerable<CategoryViewModelWithParent>> GetAllWithParents()
+		{
+			var categories = _mapper.Map<IEnumerable<CategoryViewModelWithParent>>(await _categoryService.GetListAsync());
+
+			return categories;
+		}
+
 
 		[HttpGet]
 		public Task<Category> Get(int id)
@@ -47,40 +59,50 @@ namespace CodeForFun.UI.WebMvcCore.Controllers
 
 		// POST: api/Category
 		[HttpPost]
-		public IActionResult Post([FromBody] Category Category)
+		public IActionResult Post([FromBody] CategoryViewModel category)
 		{
-			_categoryService.AddAsync(Category);
+			var cat = _categoryService.GetByName(category.Name);
+			if (cat.Result != null)
+			{
+				return BadRequest("Category already Exist");
+			}
+			_categoryService.AddAsync(_mapper.Map<Category>(category));
+			
 
 			return Ok();
 		}
 
 		[HttpPut]
-		public IActionResult Put([FromBody] Category Category)
+		public IActionResult Put([FromBody] CategoryViewModelWithParent category)
 		{
-			if (Category == null)
+			if (category == null)
 				return BadRequest("Category is Null");
 
-			var getProd = _categoryService.GetAsync(Category.Id);
-
-			if (getProd != null)
+			Category element =  _categoryService.GetAsync(category.Id).Result;
+			element.Name = category.Name;
+			if (category.ParentName != null)
 			{
-				_categoryService.UpdateAsync(Category);
+				Category parent = _categoryService.GetByName(category.ParentName).Result;
+				element.ParentId = parent.Id;
+
 			}
+
+			_categoryService.UpdateAsync(element);
 
 			return Ok();
 		}
 
 		[HttpDelete]
-		public IActionResult Delete(int id)
+		public IActionResult Delete(string categoryName)
 		{
-			var getProd = _categoryService.GetAsync(id);
+			var category = _categoryService.GetByName(categoryName);
 
-			if (getProd.Result != null)
+			if (category.Result != null)
 			{
-				_categoryService.DeleteAsync(getProd.Result);
+				_categoryService.DeleteAsync(category.Result);
 			}
 
-			return Ok();
+			return Ok(categoryName);
 		}
 	}
 }

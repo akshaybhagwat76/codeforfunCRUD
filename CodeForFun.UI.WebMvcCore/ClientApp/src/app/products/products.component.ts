@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ProductService } from '../services/product.service';
 import { OrderService } from '../services/order.service';
+import { CategoryTableComponent } from '../category/category-table/category-table.component';
+import { CategoryService } from '../services/category.service';
 
 @Component({
   selector: 'app-products',
@@ -13,15 +15,21 @@ export class ProductsComponent implements OnInit {
   isOrdersShow = false;
   isProductsShow;
   editMode = false;
+  isCategoryShow = false;
+  isProductsToCustomer = false;
   creatingMode = false;
   categoryName;
+ categoryCreationMode
   productForEditOrCreate: any = {};
+  tableName = "Product"
 
-  constructor(private productService: ProductService, private orderService: OrderService) {
+  constructor(private productService: ProductService, private orderService: OrderService,
+    private categoryService:CategoryService,private categoryTable:CategoryTableComponent    ) {
   }
 
   ngOnInit() {
     this.isProductsShow = true;
+    this.tableName = "Product"
     this.fetch();
   }
 
@@ -57,17 +65,20 @@ export class ProductsComponent implements OnInit {
   createProductMode() {
     this.creatingMode = !this.creatingMode;
   }
+  createCategoryMode(){
+   this.categoryCreationMode = true;
+  }
 
   OrdersMode(orderMode) {
     if (orderMode == "getAll")
       this.orderService.productId = null;
 
-    this.isOrdersShow = !this.isOrdersShow;
-    this.isProductsShow = !this.isProductsShow;
+   this.hideOtherTables();
+   this.isOrdersShow = !this.isOrdersShow;
+   this.tableName = "Orders"
   }
 
   deleteProduct(productId) {
-    console.log(productId);
     this.productService.delete(productId).subscribe(x => {
       this.fetch();
     })
@@ -82,6 +93,30 @@ export class ProductsComponent implements OnInit {
 
   saveSelectedCategory($event) {
     this.categoryName = $event;
+  }
+  categoryMode(){
+    this.hideOtherTables();
+    this.isCategoryShow = !this.isCategoryShow;
+    this.tableName = "Category"
+  }
+
+  productsToCustomerMode(){
+    this.hideOtherTables();
+   this.isProductsToCustomer = !this.isProductsToCustomer
+    this.tableName = "Products To Customer"
+  }
+
+  hideOtherTables(){
+    this.isOrdersShow = false;
+    this.isProductsShow = false;
+    this.isCategoryShow = false;
+    this.isProductsToCustomer = false;
+  }
+
+  productMode(){
+    this.hideOtherTables();
+    this.isProductsShow = !this.isProductsShow;
+    this.tableName = "Product"
   }
 
   createProduct() {

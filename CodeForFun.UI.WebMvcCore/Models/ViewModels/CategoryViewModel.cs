@@ -11,4 +11,11 @@ namespace CodeForFun.UI.WebMvcCore.Models.ViewModels
         public string Name { get; set; }
         public virtual ICollection<CategoryViewModel> InverseParent { get; set; }
     }
+    public class CategoryViewModelWithParent
+    {
+        public short Id { get; set; }
+        public string Name { get; set; }
+        public string ParentId { get; set; }
+        public string ParentName { get; set; }
+    }
 }
