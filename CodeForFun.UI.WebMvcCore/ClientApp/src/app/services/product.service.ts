@@ -20,6 +20,19 @@ export class ProductService {
 
   }
 
+
+  loadProducts() {
+    const sub = new Subject<any>();
+
+    this.http.get('/api/productdetails/GetAllProducts').subscribe(x => {
+      sub.next(x)
+      sub.complete();
+    })
+
+    return sub;
+
+  }
+
   edit(product) {
     const sub = new Subject<any>();
 
@@ -32,6 +45,21 @@ export class ProductService {
 
   }
 
+
+  editProductDetails(product) {
+    const sub = new Subject<any>();
+
+    this.http.put('/api/productdetails/', product).subscribe(x => {
+      sub.next(x)
+      sub.complete();
+    })
+
+    return sub;
+
+  }
+
+ 
+
   delete(productId) {
     const sub = new Subject<any>();
 
@@ -43,10 +71,44 @@ export class ProductService {
     return sub;
   }
 
+  deleteProductDetail(productId) {
+    const sub = new Subject<any>();
+
+    this.http.delete('/api/productdetails?productId=' + productId).subscribe(x => {
+      sub.next(x)
+      sub.complete();
+    })
+
+    return sub;
+  }
+
   add(product){
     const sub = new Subject<any>();
 
     this.http.post('/api/product/',product).subscribe(x => {
+      sub.next(x)
+      sub.complete();
+    })
+
+    return sub;
+  }
+
+  addProductDetail(product) {
+    const sub = new Subject<any>();
+
+    this.http.post('/api/productdetails/', product).subscribe(x => {
+      sub.next(x)
+      sub.complete();
+    })
+
+    return sub;
+  }
+
+
+  getAllProductDetails() {
+    const sub = new Subject<any>();
+
+    this.http.get('/api/productdetails/GetAll').subscribe(x => {
       sub.next(x)
       sub.complete();
     })

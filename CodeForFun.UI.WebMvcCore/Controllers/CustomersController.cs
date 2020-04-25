@@ -11,11 +11,11 @@ namespace CodeForFun.UI.WebMvcCore.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomerController : ControllerBase
+    public class CustomersController : ControllerBase
     {
-		private readonly ICustomerService _CustomerService;
+		private readonly ICustomerService _CustomerService;	
 
-		public CustomerController(ICustomerService CustomerService)
+		public CustomersController(ICustomerService CustomerService)
 		{
 			_CustomerService = CustomerService;
 		}
@@ -25,6 +25,7 @@ namespace CodeForFun.UI.WebMvcCore.Controllers
 		[Route("GetAll")]
 		public Task<List<Customer>> Get()
 		{
+			
 			return _CustomerService.GetListAsync();
 		}
 
@@ -41,9 +42,10 @@ namespace CodeForFun.UI.WebMvcCore.Controllers
 
 		// POST: api/Customer
 		[HttpPost]
-		public IActionResult Post([FromBody] Customer Customer)
+		public async Task<IActionResult> Post(Customer customer)
+
 		{
-			_CustomerService.AddAsync(Customer);
+			_CustomerService.AddAsync(customer);
 
 			return Ok();
 		}

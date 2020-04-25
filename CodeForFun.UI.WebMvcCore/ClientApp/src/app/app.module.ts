@@ -48,7 +48,7 @@ export function provideConfig() {
       HomeComponent,
       CounterComponent,
       FetchDataComponent,
-      ProductsComponent,
+    ProductsComponent,
       CategoryComponent,
       OrdersComponent,
       LoginComponent,
