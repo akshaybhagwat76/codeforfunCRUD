@@ -25,7 +25,8 @@ namespace CodeForFun.Repository.DataAccess.DbContexts
 		}
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-			optionsBuilder.UseSqlServer(@"Server=DESKTOP-NA7LG1A;Initial Catalog=code-for-crud;Persist Security Info=False;User ID=sa;Password=sa123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;");
+			optionsBuilder.UseSqlServer(@"Server=DESKTOP-NA7LG1A;Initial Catalog=code-for-fun;Persist Security Info=False;User ID=sa;Password=sa123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;");
+
 		}
 
 		public DbSet<User> Users { get; set; }
