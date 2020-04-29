@@ -32,18 +32,20 @@ export class LoginComponent implements OnInit {
 
   signInWithFB() {
     this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
+    this.router.navigate([''])
   }
   signInWithGoogle() {
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then(x => {
       this.socialLogin.name = x.name;
       this.socialLogin.email = x.email;
-
+      this.router.navigate([''])
       this.user.emit(this.socialLogin)
 
     });
   }
   logOut(){
     this.authService.signOut();
+    this.router.navigate([''])
   }
 
   login(){
@@ -51,6 +53,7 @@ export class LoginComponent implements OnInit {
       localStorage.setItem('token', x.token);
       this.user.emit(this.model);
       this.visibility = false;
+      this.router.navigate([''])
     })
   }
 

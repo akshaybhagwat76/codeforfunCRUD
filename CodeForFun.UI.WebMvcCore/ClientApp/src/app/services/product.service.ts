@@ -24,7 +24,7 @@ export class ProductService {
   loadProducts() {
     const sub = new Subject<any>();
 
-    this.http.get('/api/productdetails/GetAllProducts').subscribe(x => {
+    this.http.get('/api/product/GetAll').subscribe(x => {
       sub.next(x)
       sub.complete();
     })

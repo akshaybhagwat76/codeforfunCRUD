@@ -6,9 +6,20 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class ProductsToCustomerService {
-
+isCreationMode = false;
   constructor(private http: HttpClient) { }
 
+  createNewOrder(ord){
+    const sub = new Subject<any>();
+
+    this.http.post('/api/ProductsToCustomer/',ord).subscribe(x => {
+      sub.next(x)
+      sub.complete();
+    })
+  
+    return sub;
+  
+  }
 
 loadProductsToCustomer(){
   const sub = new Subject<any>();
