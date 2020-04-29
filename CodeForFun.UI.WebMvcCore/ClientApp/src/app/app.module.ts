@@ -29,7 +29,7 @@ import { AuthGuard } from './guards/authGuard.service';
 let config = new AuthServiceConfig([
   {
     id: GoogleLoginProvider.PROVIDER_ID,
-    provider: new GoogleLoginProvider("735335157823-lqpobanqtlfh05sb2fje2ltskp906nqs.apps.googleusercontent.com")
+    provider: new GoogleLoginProvider("")
   },
   {
     id: FacebookLoginProvider.PROVIDER_ID,
@@ -68,6 +68,8 @@ export function provideConfig() {
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
       { path: 'counter', component: CounterComponent },
+      { path: 'login', component: LoginComponent },
+      { path: 'register', component: RegisterComponent },
       { path: 'products', component: ProductsComponent,canActivate:[AuthGuard],data:{role:"contentEditor"}}
     ])
   ],

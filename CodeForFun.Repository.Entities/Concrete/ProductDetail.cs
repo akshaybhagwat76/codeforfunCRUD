@@ -14,7 +14,7 @@ namespace CodeForFun.Repository.Entities.Concrete
         [StringLength(256)]
         public string Description { get; set; }
 
-        [ForeignKey(nameof(Id))]
+        public int? ProductId { get; set; }
         [InverseProperty(nameof(Product.ProductDetail))]
         public virtual Product IdNavigation { get; set; }
     }

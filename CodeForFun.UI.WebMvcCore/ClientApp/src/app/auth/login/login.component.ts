@@ -38,9 +38,8 @@ export class LoginComponent implements OnInit {
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then(x => {
       this.socialLogin.name = x.name;
       this.socialLogin.email = x.email;
-      location.href='';
-      this.user.emit(this.socialLogin)
-
+      localStorage.setItem('token', this.socialLogin.name);
+       this.router.navigate([''])
     });
   }
   logOut(){
@@ -53,7 +52,6 @@ export class LoginComponent implements OnInit {
       localStorage.setItem('token', x.token);
       this.user.emit(this.model);
       this.visibility = false;
-      location.href='';
     })
   }
 

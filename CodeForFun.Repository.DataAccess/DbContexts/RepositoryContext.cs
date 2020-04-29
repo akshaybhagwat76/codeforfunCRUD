@@ -11,7 +11,7 @@ namespace CodeForFun.Repository.DataAccess.DbContexts
 {
 	public partial class RepositoryContext : DbContext
 	{
-		
+
 		public RepositoryContext(DbContextOptions<RepositoryContext> options) : base(options)
 		{
 		}
@@ -30,7 +30,7 @@ namespace CodeForFun.Repository.DataAccess.DbContexts
 		}
 
 		public DbSet<User> Users { get; set; }
-		public DbSet<Role>Roles { get; set; }
+		public DbSet<Role> Roles { get; set; }
 		public DbSet<Category> Categories { get; set; }
 		public DbSet<Customer> Customers { get; set; }
 		public DbSet<Product> Products { get; set; }
@@ -81,7 +81,8 @@ namespace CodeForFun.Repository.DataAccess.DbContexts
 
 				entity.HasOne(x => x.ProductDetail)
 				.WithOne(x => x.IdNavigation)
-				.HasForeignKey<ProductDetail>(x => x.Id);
+				.HasForeignKey<ProductDetail>(x => x.Id)
+								.IsRequired(false);
 			});
 
 			modelBuilder.Entity<ProductDetail>(entity =>
@@ -93,8 +94,7 @@ namespace CodeForFun.Repository.DataAccess.DbContexts
 				entity.HasOne(d => d.IdNavigation)
 							.WithOne(p => p.ProductDetail)
 							.HasForeignKey<ProductDetail>(d => d.Id)
-							.OnDelete(DeleteBehavior.ClientSetNull)
-							.HasConstraintName("FK_ProductDetails_Products");
+							.IsRequired(false);
 			});
 
 			modelBuilder.Entity<ProductsToCustomer>(entity =>
@@ -113,7 +113,7 @@ namespace CodeForFun.Repository.DataAccess.DbContexts
 									.HasConstraintName("FK_ProductsToCustomers_Products");
 			});
 
-		
+
 			modelBuilder.Entity<Role>().HasData(new[]{
    new Role {
 	  RoleID = 1, // Must be != 0

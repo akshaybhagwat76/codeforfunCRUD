@@ -32,8 +32,8 @@
               >Counter</a
             >
           </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/products']"
+          <li class="nav-item" >
+            <a class="nav-link text-dark" [routerLink]="['products']"
               >Products</a
             >
           </li>
@@ -43,12 +43,12 @@
             >
           </li>
           <li *ngIf="!isLogged" class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" (click)="loginForm = !loginForm;registerForm = false"
+            <a class="nav-link text-dark"  [routerLink]="['/login']"
               >Login</a
             >
           </li>
           <li class="nav-item" *ngIf="!isLogged" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" (click)="registerForm = !registerForm;loginForm = false"
+            <a class="nav-link text-dark"  [routerLink]="['/register']"
               >Register</a
             >
           </li>

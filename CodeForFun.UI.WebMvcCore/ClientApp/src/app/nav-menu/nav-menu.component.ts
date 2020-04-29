@@ -14,12 +14,14 @@ export class NavMenuComponent implements OnInit {
   isLoggedBySocialMedia;
   loginForm = false;
   registerForm = false;
-
-  constructor(private authService: AuthService, private accountService: AccountService) { }
+  token:any;
+  constructor(private authService: AuthService, private accountService: AccountService) { 
+    this.checkAuth();
+  }
 
   ngOnInit(): void {
     this.checkAuth();
-
+    this.checkLogin();
   }
 
   collapse() {
@@ -27,6 +29,7 @@ export class NavMenuComponent implements OnInit {
   }
 
   checkLogin() {
+    console.log(2)
     this.authService.authState.subscribe(x => {
       if (x) {
         this.isLogged = true;
@@ -39,6 +42,7 @@ export class NavMenuComponent implements OnInit {
     })
   }
   checkAuth() {
+    console.log(1)
     this.accountService.isLogged().subscribe(x => {
       if (x) {
         console.log(x)
@@ -50,7 +54,6 @@ export class NavMenuComponent implements OnInit {
         this.checkLogin();
         this.isLogged = false;
       }
-
     })
   }
 
