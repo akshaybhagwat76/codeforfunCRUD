@@ -18,15 +18,18 @@ export class NavMenuComponent implements OnInit {
   constructor(private authService: AuthService, private accountService: AccountService) { }
 
   ngOnInit(): void {
+    debugger
     this.checkAuth();
 
   }
 
   collapse() {
+    debugger
     this.isExpanded = false;
   }
 
   checkLogin() {
+    debugger
     this.authService.authState.subscribe(x => {
       if (x) {
         this.isLogged = true;
@@ -39,6 +42,7 @@ export class NavMenuComponent implements OnInit {
     })
   }
   checkAuth() {
+    debugger
     this.accountService.isLogged().subscribe(x => {
       if (x) {
         console.log(x)
@@ -59,7 +63,7 @@ export class NavMenuComponent implements OnInit {
   }
 
   logged($event) {
-
+    debugger
     this.user.name = $event.surname == undefined ? $event.email: $event.name + " " + $event.surname
     this.isLogged = true;
   }

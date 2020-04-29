@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AuthService } from "angularx-social-login";
 import { FacebookLoginProvider, GoogleLoginProvider } from "angularx-social-login";
 import { AccountService } from 'src/app/services/account.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -14,7 +15,7 @@ export class RegisterComponent implements OnInit {
 
   @Output() user = new EventEmitter<any>();
 
-  constructor(private authService: AuthService,private accountService:AccountService) { }
+  constructor(private authService: AuthService, private accountService: AccountService, private router: Router) { }
 
   ngOnInit() {
     this.authService.authState.subscribe(x => {
@@ -48,8 +49,10 @@ export class RegisterComponent implements OnInit {
   }
 
   register(){
-    this.accountService.register(this.model).subscribe(x=>{
-        this.user.emit(this.model);
+    this.accountService.register(this.model).subscribe(x => {
+      this.user.emit(this.model);
+      this.router.navigate['products'];
+
     })
   }
 }

@@ -89,7 +89,7 @@ namespace CodeForFun.Repository.Business.Concrete.Managers
 		{
 			var p = _repo.User.Get(x => x.Email == ss.Email);
 
-			if (p == null)
+			if (p!=null && p.Result == null)
 			{
 				try
 				{

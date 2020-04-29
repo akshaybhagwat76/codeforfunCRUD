@@ -21,7 +21,6 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.visibility = true;
     this.authService.authState.subscribe(x => {
-
       if (x != null) {
         this.socialLogin.name = x.name || null;
         this.socialLogin.email = x.email || null;

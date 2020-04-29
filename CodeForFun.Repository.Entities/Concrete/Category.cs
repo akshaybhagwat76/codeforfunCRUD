@@ -22,6 +22,7 @@ namespace CodeForFun.Repository.Entities.Concrete
         [StringLength(36)]
         public string Name { get; set; }
 
+
         [ForeignKey(nameof(ParentId))]
         [InverseProperty(nameof(Category.InverseParent))]
         public virtual Category Parent { get; set; }

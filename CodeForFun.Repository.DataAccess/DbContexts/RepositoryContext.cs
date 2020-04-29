@@ -1,11 +1,6 @@
 ﻿using CodeForFun.Repository.Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
-using IdentityServer4.EntityFramework.Options;
-
-using Microsoft.Extensions.Options;
 using CodeForFun.UI.WebMvcCore.Models;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace CodeForFun.Repository.DataAccess.DbContexts
 {
