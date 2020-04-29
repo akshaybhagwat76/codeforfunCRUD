@@ -88,6 +88,7 @@ export class ProductsComponent implements OnInit {
   }
 
   fetch() {
+    this.products = [];
     this.productService.loadCategories().subscribe((x: []) => {
       this.products = x;
       this.filteredProducts = x;

@@ -24,8 +24,10 @@ export class ProductsToCustomerComponent implements OnInit {
   }
 
   createProductsToCustomer(){
-    this.productsToCustomerService.update(this.productsToCustomerForEditOrCreate).subscribe(x=>{
+    this.productsToCustomerService.createNewOrder(this.productsToCustomerForEditOrCreate).subscribe(x=>{
       this.fetch();
+      this.creatingMode = !this.creatingMode;
+      this.productsToCustomerService.isCreationMode = false;
     })
   }
 
@@ -51,6 +53,7 @@ export class ProductsToCustomerComponent implements OnInit {
 
   editProductToCustomer(){
     this.productsToCustomerService.update(this.productsToCustomerForEditOrCreate).subscribe(x=>{
+      this.editMode = !this.editMode;
       this.fetch();
     })
   }
