@@ -66,7 +66,7 @@ export function provideConfig() {
     SocialLoginModule,
     RecaptchaV3Module,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: '', component: HomeComponent },
       { path: 'counter', component: CounterComponent },
       { path: 'products', component: ProductsComponent,canActivate:[AuthGuard],data:{role:"contentEditor"}}
     ])

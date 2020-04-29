@@ -30,7 +30,7 @@ export class RegisterComponent implements OnInit {
 
   signInWithFB() {
     this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
-    this.router.navigate([''])
+    location.href='';
   }
   signInWithGoogle() {
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then(x => {
@@ -38,14 +38,14 @@ export class RegisterComponent implements OnInit {
       this.socialLogin.email = x.email;
 
       this.user.emit(this.socialLogin)
-      this.router.navigate([''])
+      location.href='';
 
     });
   }
   logOut(){
     this.authService.signOut().then(x=>{
       this.accountService.logOut().subscribe(x=>{
-        this.router.navigate([''])
+        location.href='';
       })
     });
   }
@@ -53,7 +53,7 @@ export class RegisterComponent implements OnInit {
   register(){
     this.accountService.register(this.model).subscribe(x=>{
         this.user.emit(this.model);
-        this.router.navigate([''])
+        location.href='';
     })
   }
 }

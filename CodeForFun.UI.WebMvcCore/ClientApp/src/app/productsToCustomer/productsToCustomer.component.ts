@@ -14,6 +14,8 @@ export class ProductsToCustomerComponent implements OnInit {
   productsToCustomerForEditOrCreate: any = {};
   products: any[] = [];
   customers: any[] = [];
+  editMode = false;
+
   constructor(private productsToCustomerService: ProductsToCustomerService, private productsService: ProductService,private customerService:CustomerService) { }
 
   ngOnInit() {
@@ -35,7 +37,7 @@ export class ProductsToCustomerComponent implements OnInit {
   }
 
   editModeForProductsToCustomer(productToCustomer) {
-
+    this.editMode = !this.editMode;
   }
 
   loadCustomers(){
