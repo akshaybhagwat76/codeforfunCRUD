@@ -79,7 +79,7 @@ export class CustomerComponent implements OnInit {
   }
 
   fetch() {
-    this.customerService.getAllProductDetails().subscribe((x: []) => {
+    this.productService.getAllProductDetails().subscribe((x: []) => {
       this.products = x;
       this.filteredProducts = x;
     })

@@ -77,8 +77,7 @@ namespace CodeForFun.Repository.DataAccess.DbContexts
 				entity.HasOne(d => d.Category)
 						.WithMany(p => p.Products)
 						.HasForeignKey(d => d.CategoryId)
-						.IsRequired(false)
-						.HasConstraintName("FK_Products_Categories");
+						.IsRequired(false);
 
 				entity.HasOne(x => x.ProductDetail)
 				.WithOne(x => x.IdNavigation)

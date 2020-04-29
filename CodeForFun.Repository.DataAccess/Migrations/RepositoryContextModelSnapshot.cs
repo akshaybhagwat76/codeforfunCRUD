@@ -21,9 +21,9 @@ namespace CodeForFun.Repository.DataAccess.Migrations
 
             modelBuilder.Entity("CodeForFun.Repository.Entities.Concrete.Category", b =>
                 {
-                    b.Property<short>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("smallint")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
@@ -31,8 +31,8 @@ namespace CodeForFun.Repository.DataAccess.Migrations
                         .HasMaxLength(36)
                         .IsUnicode(false);
 
-                    b.Property<short?>("ParentId")
-                        .HasColumnType("smallint");
+                    b.Property<int?>("ParentId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -70,8 +70,8 @@ namespace CodeForFun.Repository.DataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<short>("CategoryId")
-                        .HasColumnType("smallint");
+                    b.Property<int?>("CategoryId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Code")
                         .HasColumnType("varchar(16)")
@@ -210,8 +210,7 @@ namespace CodeForFun.Repository.DataAccess.Migrations
                 {
                     b.HasOne("CodeForFun.Repository.Entities.Concrete.Category", "Category")
                         .WithMany("Products")
-                        .HasForeignKey("CategoryId")
-                        .HasConstraintName("FK_Products_Categories");
+                        .HasForeignKey("CategoryId");
                 });
 
             modelBuilder.Entity("CodeForFun.Repository.Entities.Concrete.ProductDetail", b =>

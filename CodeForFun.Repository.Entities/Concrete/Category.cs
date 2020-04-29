@@ -17,8 +17,8 @@ namespace CodeForFun.Repository.Entities.Concrete
         }
 
         [Key]
-        public Int16 Id { get; set; }
-        public Int16? ParentId { get; set; }
+        public int Id { get; set; }
+        public int? ParentId { get; set; }
         [StringLength(36)]
         public string Name { get; set; }
 

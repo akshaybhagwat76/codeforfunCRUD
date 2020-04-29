@@ -9,7 +9,7 @@ export class CustomerService {
 
   constructor(private http: HttpClient) { }
 
-  editProductDetails(product) {
+    editProductDetails(product) {
     const sub = new Subject<any>();
 
     this.http.put('/api/customers/', product).subscribe(x => {

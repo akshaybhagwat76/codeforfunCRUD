@@ -24,8 +24,8 @@ export class ProductsToCustomerComponent implements OnInit {
   }
 
   createProductsToCustomer(){
-    this.productsToCustomerService.createNewOrder(this.productsToCustomerForEditOrCreate).subscribe(x=>{
-
+    this.productsToCustomerService.update(this.productsToCustomerForEditOrCreate).subscribe(x=>{
+      this.fetch();
     })
   }
 
@@ -37,28 +37,38 @@ export class ProductsToCustomerComponent implements OnInit {
   }
 
   editModeForProductsToCustomer(productToCustomer) {
+    this.productsToCustomerForEditOrCreate.customerName = productToCustomer.customer.name 
+    this.productsToCustomerForEditOrCreate.Id = productToCustomer.productsToCustomerId
+    this.productsToCustomerForEditOrCreate.productName = productToCustomer.product.name
     this.editMode = !this.editMode;
   }
 
   loadCustomers(){
     this.customerService.getAllCustomers().subscribe(x=>{
-      console.log(x);
       this.customers = x;
+    })
+  }
+
+  editProductToCustomer(){
+    this.productsToCustomerService.update(this.productsToCustomerForEditOrCreate).subscribe(x=>{
+      this.fetch();
     })
   }
 
   loadProducts() {
     this.productsService.loadProducts().subscribe(x => {
     this.products = x;
-      console.log(this.products)
     })
   }
 
   deleteProductsToCustomer(productsToCustomerId) {
-
+    this.productsToCustomerService.deleteProductsToCustomer(productsToCustomerId).subscribe(x=>{
+      this.fetch();
+    })
   }
 
   fetch(){
+    this.productsToCustomer = [];
     this.productsToCustomerService.loadProductsToCustomer().subscribe((x: Array<any>) => {
       x.forEach(elemet => {
         this.productsToCustomer.push(elemet)

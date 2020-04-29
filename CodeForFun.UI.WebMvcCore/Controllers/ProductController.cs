@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using CodeForFun.Repository.Business.Abstract.Services;
+using CodeForFun.Repository.DataAccess.DbContexts;
 using CodeForFun.Repository.Entities.Concrete;
 using CodeForFun.UI.WebMvcCore.Models.ViewModels;
 using Microsoft.AspNetCore.Http;
@@ -17,13 +18,15 @@ namespace CodeForFun.UI.WebMvcCore.Controllers
 	{
 		private readonly IProductService _productService;
 		private readonly IMapper _mapper;
+		private readonly RepositoryContext _repos;
 		private readonly ICategoryService _categoryService;
 
-		public ProductController(IProductService productService,ICategoryService categoryService,IMapper mapper)
+		public ProductController(IProductService productService, ICategoryService categoryService, IMapper mapper)
 		{
 			_productService = productService;
 			_categoryService = categoryService;
 			_mapper = mapper;
+			_repos = _repos ?? new RepositoryContext();
 		}
 
 		// GET: api/Product
@@ -53,7 +56,7 @@ namespace CodeForFun.UI.WebMvcCore.Controllers
 			var category = await _categoryService.GetByName(product.CategoryName) ?? null;
 			var newProduct = new Product()
 			{
-				CategoryId = Convert.ToInt16(category.Id),
+				CategoryId = category?.Id ?? null,
 				Code = product.Code,
 				DateRegister = DateTime.Now,
 				IsActive = product.IsActive,
@@ -76,8 +79,9 @@ namespace CodeForFun.UI.WebMvcCore.Controllers
 			if (product == null)
 				return BadRequest("Product is Null");
 
-				_productService.UpdateAsync(_mapper.Map<Product>(product));
-			
+			product.CategoryId = product.CategoryId == 0 ? null : product.CategoryId;
+			_productService.UpdateAsync(_mapper.Map<Product>(product));
+
 
 			return Ok();
 		}
@@ -86,9 +90,11 @@ namespace CodeForFun.UI.WebMvcCore.Controllers
 		public IActionResult Delete(int productId)
 		{
 			var getProd = _productService.GetAsync(productId);
+			var productDetails = _repos.ProductDetails.SingleOrDefault(x => x.Id == getProd.Result.Id);
 
 			if (getProd.Result != null)
 			{
+				_repos.ProductDetails.Remove(productDetails);
 				_productService.DeleteAsync(getProd.Result);
 			}
 

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CodeForFun.Repository.DataAccess.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20200424010643_Initial")]
+    [Migration("20200429125321_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,9 +23,9 @@ namespace CodeForFun.Repository.DataAccess.Migrations
 
             modelBuilder.Entity("CodeForFun.Repository.Entities.Concrete.Category", b =>
                 {
-                    b.Property<short>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("smallint")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
@@ -33,8 +33,8 @@ namespace CodeForFun.Repository.DataAccess.Migrations
                         .HasMaxLength(36)
                         .IsUnicode(false);
 
-                    b.Property<short?>("ParentId")
-                        .HasColumnType("smallint");
+                    b.Property<int?>("ParentId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -72,8 +72,8 @@ namespace CodeForFun.Repository.DataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<short>("CategoryId")
-                        .HasColumnType("smallint");
+                    b.Property<int?>("CategoryId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Code")
                         .HasColumnType("varchar(16)")
@@ -119,16 +119,20 @@ namespace CodeForFun.Repository.DataAccess.Migrations
 
             modelBuilder.Entity("CodeForFun.Repository.Entities.Concrete.ProductsToCustomer", b =>
                 {
+                    b.Property<int>("ProductsToCustomerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductsToCustomerId")
-                        .HasColumnType("int");
+                    b.HasKey("ProductsToCustomerId");
 
-                    b.HasKey("CustomerId", "ProductId");
+                    b.HasIndex("CustomerId");
 
                     b.HasIndex("ProductId");
 
@@ -148,6 +152,18 @@ namespace CodeForFun.Repository.DataAccess.Migrations
                     b.HasKey("RoleID");
 
                     b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            RoleID = 1,
+                            Name = "Admin"
+                        },
+                        new
+                        {
+                            RoleID = 2,
+                            Name = "User"
+                        });
                 });
 
             modelBuilder.Entity("CodeForFun.UI.WebMvcCore.Models.User", b =>
@@ -196,10 +212,7 @@ namespace CodeForFun.Repository.DataAccess.Migrations
                 {
                     b.HasOne("CodeForFun.Repository.Entities.Concrete.Category", "Category")
                         .WithMany("Products")
-                        .HasForeignKey("CategoryId")
-                        .HasConstraintName("FK_Products_Categories")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CategoryId");
                 });
 
             modelBuilder.Entity("CodeForFun.Repository.Entities.Concrete.ProductDetail", b =>

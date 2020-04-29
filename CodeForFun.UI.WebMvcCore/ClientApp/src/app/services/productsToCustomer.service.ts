@@ -21,6 +21,18 @@ isCreationMode = false;
   
   }
 
+  update(ord){
+    const sub = new Subject<any>();
+
+    this.http.put('/api/ProductsToCustomer/',ord).subscribe(x => {
+      sub.next(x)
+      sub.complete();
+    })
+  
+    return sub;
+  
+  }
+
 loadProductsToCustomer(){
   const sub = new Subject<any>();
 
@@ -30,6 +42,17 @@ loadProductsToCustomer(){
 
   return sub;
 
+}
+
+deleteProductsToCustomer(id){
+  const sub = new Subject<any>();
+
+  this.http.delete('/api/ProductsToCustomer?id='+id).subscribe(x => {
+    sub.next(x)
+    sub.complete();
+  })
+
+  return sub;
 }
 
 }

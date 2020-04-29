@@ -47,31 +47,48 @@
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
             (click)="editMode = !editMode">&times;</button>
         </div>
+
         <div class="modal-body">
           <div class="form-group">
-            <label>Name</label>
-            <input type="text" class="form-control" required [(ngModel)]="categoryForEditOrCreate.name" name="name">
+            <p>Customer Name {{productsToCustomerForEditOrCreate.customerName}}</p>
+            <div class="btn-group col-sm-6">
+              <button type="button" class="btn btn-info dropdown-toggle" (click)="loadCustomers()" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+                Customers
+              </button>
+              <div class="dropdown-menu" >
+                  <ul class="dropdown-item" >
+                    <li  class="dropdown-item"  *ngFor="let customer of customers">
+                      <a   (click)="selectCustomer(customer.name)">{{customer.name + " " + customer.surname}}</a> 
+                    </li>
+                  </ul>
+              </div>
+            </div>
           </div>
+        </div>
+    
+        <div class="modal-body">
           <div class="form-group">
-            <p>Selected Category : {{categoryForEditOrCreate.parentName || "No Parent"}}</p>
-            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false">
-            Parents
-          </button>
-          <div class="dropdown-menu" >
-              <ul class="dropdown-item" >
-                <li  class="dropdown-item"  *ngFor="let category of categories">
-                  <a   (click)="selectCategory(category.name)">{{category.name}}</a>
-                </li>
-              </ul>
-
-          </div>
+            <p>ProductName {{productsToCustomerForEditOrCreate.productName}}</p>
+            <div class="btn-group col-sm-6">
+              <button type="button" class="btn btn-info dropdown-toggle" (click)="loadProducts()" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+                Products
+              </button>
+              <div class="dropdown-menu" >
+                  <ul class="dropdown-item" >
+                    <li  class="dropdown-item"  *ngFor="let product of products">
+                      <a   (click)="selectProduct(product.name)">{{product.name}}</a> 
+                    </li>
+                  </ul>
+              </div>
+            </div>
           </div>
         </div>
         <div class="modal-footer">
           <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel"
             (click)="editMode = !editMode">
-          <input type="submit" class="btn btn-info" value="Save" (click)="editCategory()">
+          <input type="submit" class="btn btn-info" value="Save" (click)="editProductToCustomer()">
         </div>
       </form>
     </div>

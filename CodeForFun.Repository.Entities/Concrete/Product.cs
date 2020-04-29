@@ -16,7 +16,7 @@ namespace CodeForFun.Repository.Entities.Concrete
 
         [Key]
         public int Id { get; set; }
-        public Int16 CategoryId { get; set; }
+        public int? CategoryId { get; set; }
         [StringLength(16)]
         public string Code { get; set; }
         [StringLength(32)]
@@ -27,7 +27,6 @@ namespace CodeForFun.Repository.Entities.Concrete
         public DateTime DateRegister { get; set; }
         public bool IsActive { get; set; }
 
-        [ForeignKey(nameof(CategoryId))]
         [InverseProperty("Products")]
         public virtual Category Category { get; set; }
         [InverseProperty("IdNavigation")]

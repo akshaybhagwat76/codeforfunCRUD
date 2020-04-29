@@ -11,9 +11,9 @@ namespace CodeForFun.Repository.DataAccess.Migrations
                 name: "Categories",
                 columns: table => new
                 {
-                    Id = table.Column<short>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ParentId = table.Column<short>(nullable: true),
+                    ParentId = table.Column<int>(nullable: true),
                     Name = table.Column<string>(unicode: false, maxLength: 36, nullable: true)
                 },
                 constraints: table =>
@@ -60,7 +60,7 @@ namespace CodeForFun.Repository.DataAccess.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CategoryId = table.Column<short>(nullable: false),
+                    CategoryId = table.Column<int>(nullable: true),
                     Code = table.Column<string>(unicode: false, maxLength: 16, nullable: true),
                     Name = table.Column<string>(unicode: false, maxLength: 32, nullable: true),
                     UnitPrice = table.Column<decimal>(type: "decimal(9, 2)", nullable: true),
@@ -71,11 +71,11 @@ namespace CodeForFun.Repository.DataAccess.Migrations
                 {
                     table.PrimaryKey("PK_Products", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Products_Categories",
+                        name: "FK_Products_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -89,7 +89,7 @@ namespace CodeForFun.Repository.DataAccess.Migrations
                     PasswordSalt = table.Column<byte[]>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     Surname = table.Column<string>(nullable: true),
-                    RoleId = table.Column<int>(nullable: true)
+                    RoleId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -124,13 +124,14 @@ namespace CodeForFun.Repository.DataAccess.Migrations
                 name: "ProductsToCustomers",
                 columns: table => new
                 {
-                    CustomerId = table.Column<int>(nullable: false),
-                    ProductId = table.Column<int>(nullable: false),
                     ProductsToCustomerId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CustomerId = table.Column<int>(nullable: false),
+                    ProductId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductsToCustomers", x => new { x.CustomerId, x.ProductId });
+                    table.PrimaryKey("PK_ProductsToCustomers", x => x.ProductsToCustomerId);
                     table.ForeignKey(
                         name: "FK_ProductsToCustomers_Customers",
                         column: x => x.CustomerId,
@@ -145,6 +146,16 @@ namespace CodeForFun.Repository.DataAccess.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Roles",
+                columns: new[] { "RoleID", "Name" },
+                values: new object[] { 1, "Admin" });
+
+            migrationBuilder.InsertData(
+                table: "Roles",
+                columns: new[] { "RoleID", "Name" },
+                values: new object[] { 2, "User" });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Categories_ParentId",
                 table: "Categories",
@@ -154,6 +165,11 @@ namespace CodeForFun.Repository.DataAccess.Migrations
                 name: "IX_Products_CategoryId",
                 table: "Products",
                 column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductsToCustomers_CustomerId",
+                table: "ProductsToCustomers",
+                column: "CustomerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductsToCustomers_ProductId",

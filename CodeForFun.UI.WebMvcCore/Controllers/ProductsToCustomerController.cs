@@ -66,9 +66,11 @@ namespace CodeForFun.UI.WebMvcCore.Controllers
 			try
 			{
 				var productToCustomer = _productsToCustomer.GetAsync(productsToCustomer.Id).Result;
+				var customer = _CustomerService.GetByName(productsToCustomer.CustomerName).Result.Id;
+				var product = _productService.GetByName(productsToCustomer.ProductName).Result.Id;
 
-				productToCustomer.CustomerId = productToCustomer.CustomerId;
-				productToCustomer.ProductId = productToCustomer.ProductId;
+				productToCustomer.CustomerId = customer;
+				productToCustomer.ProductId = product;
 
 				_productsToCustomer.UpdateAsync(productToCustomer);
 
