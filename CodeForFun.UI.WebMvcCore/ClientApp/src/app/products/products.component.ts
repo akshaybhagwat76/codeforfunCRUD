@@ -3,6 +3,7 @@ import { ProductService } from '../services/product.service';
 import { OrderService } from '../services/order.service';
 import { CategoryTableComponent } from '../category/category-table/category-table.component';
 import { CategoryService } from '../services/category.service';
+import { ProductsToCustomerService } from '../services/productsToCustomer.service';
 
 @Component({
   selector: 'app-products',
@@ -19,12 +20,14 @@ export class ProductsComponent implements OnInit {
   isProductsToCustomer = false;
   creatingMode = false;
   categoryName;
- categoryCreationMode
+  @Output() categoryCreationMode = false;
+  @Output() productsToCustomerCreationMode = false;
   productForEditOrCreate: any = {};
   tableName = "Product"
 
   constructor(private productService: ProductService, private orderService: OrderService,
-    private categoryService:CategoryService,private categoryTable:CategoryTableComponent    ) {
+    private categoryService:CategoryService,private categoryTable:CategoryTableComponent,
+    private productsToCustomerService:ProductsToCustomerService    ) {
   }
 
   ngOnInit() {
@@ -65,7 +68,8 @@ export class ProductsComponent implements OnInit {
     this.creatingMode = !this.creatingMode;
   }
   createCategoryMode(){
-   this.categoryCreationMode = true;
+   this.categoryService.createMode = !this.categoryService.createMode;
+   this.categoryCreationMode = this.categoryService.createMode;
   }
 
   OrdersMode(orderMode) {
@@ -103,6 +107,11 @@ export class ProductsComponent implements OnInit {
     this.hideOtherTables();
    this.isProductsToCustomer = !this.isProductsToCustomer
     this.tableName = "Products To Customer"
+  }
+
+  createProductsToCustomerMode(){
+    this.productsToCustomerService.isCreationMode = !this.productsToCustomerService.isCreationMode;
+    this.productsToCustomerCreationMode = this.productsToCustomerService.isCreationMode;
   }
 
   hideOtherTables(){

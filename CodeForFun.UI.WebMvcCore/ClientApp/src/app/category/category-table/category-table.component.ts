@@ -9,17 +9,18 @@ import { CategoryService } from 'src/app/services/category.service';
 export class CategoryTableComponent implements OnInit {
  categories:any[] = [];
  editMode = false;
- @Input() creatingMode = false;
+ @Input() creatingMode
  categoryForEditOrCreate:any = {};
   constructor(private categoryService:CategoryService) { }
 
   ngOnInit() {
+   this.creatingMode = this.categoryService.createMode;
    this.fetch();
   }
 
   createCategory(){
+    this.creatingMode = !this.creatingMode;
     this.categoryService.createCategory(this.categoryForEditOrCreate).subscribe(x=>{
-      this.creatingMode = !this.creatingMode;
       this.fetch();
     })
   }

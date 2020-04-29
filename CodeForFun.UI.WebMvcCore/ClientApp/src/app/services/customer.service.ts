@@ -42,13 +42,11 @@ export class CustomerService {
   }
 
 
-  getAllProductDetails() {
-    debugger
+  getAllCustomers() {
     const sub = new Subject<any>();
 
     this.http.get('/api/customers/GetAll').subscribe(x => {
       sub.next(x)
-      sub.complete();
     })
 
     return sub;
