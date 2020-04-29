@@ -67,5 +67,10 @@ namespace CodeForFun.Repository.Business.Concrete.Managers
         {
             await Task.Run(() => { _dal.Customer.DeleteRange(ids.Select(id => new Customer{Id = id}).ToList()); });
         }
+
+        public async Task<Customer> GetByName(string name)
+        {
+            return await _dal.Customer.Get(x => x.Name == name);
+        }
     }
 }

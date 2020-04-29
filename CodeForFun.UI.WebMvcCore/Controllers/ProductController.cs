@@ -50,7 +50,7 @@ namespace CodeForFun.UI.WebMvcCore.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Post(ProductViewModel product)
 		{
-			var category = await _categoryService.GetByName(product.CategoryName);
+			var category = await _categoryService.GetByName(product.CategoryName) ?? null;
 			var newProduct = new Product()
 			{
 				CategoryId = Convert.ToInt16(category.Id),

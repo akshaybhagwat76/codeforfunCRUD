@@ -6,6 +6,6 @@ namespace CodeForFun.Repository.Business.Abstract.Services
 {
     public interface ICustomerService:IService<Customer>
     {
-     
+        public Task<Customer> GetByName(string name);
     }
 }

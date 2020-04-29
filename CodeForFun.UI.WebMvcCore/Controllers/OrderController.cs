@@ -51,12 +51,28 @@ namespace CodeForFun.UI.WebMvcCore.Controllers
 
 			if (getAll)
 			{
-				productsToCustomer = _productsToCustomer.GetAllWithInclude(x => x.Customer, x => x.Product).Result;
+				try
+				{
+					productsToCustomer = _productsToCustomer.GetAllWithInclude(x => x.Customer, x => x.Product).Result;
+				}
+				catch (Exception ex)
+				{
+
+				}
+			
 			}
 			else
 			{
-				productsToCustomer = _productsToCustomer.GetAllWithInclude(x => x.Customer, x => x.Product).Result.
+				try
+				{
+					productsToCustomer = _productsToCustomer.GetAllWithInclude(x => x.Customer, x => x.Product).Result.
 								Where(x => x.ProductId == id && x.Customer != null).ToList();
+				}
+				catch (Exception ex)
+				{
+
+				}
+				
 			}
 				
 			var orders = new List<OrderViewModel>();

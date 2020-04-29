@@ -74,5 +74,10 @@ namespace CodeForFun.Repository.Business.Concrete.Managers
         {
             return await _dal.Product.GetAllWithInclude(includeProperties);
         }
+
+        public async Task<Product> GetByName(string name)
+        {
+            return await _dal.Product.Get(x => x.Name == name);
+        }
     }
 }

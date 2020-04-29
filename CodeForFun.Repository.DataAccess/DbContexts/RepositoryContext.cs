@@ -25,7 +25,7 @@ namespace CodeForFun.Repository.DataAccess.DbContexts
 		}
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-			optionsBuilder.UseSqlServer(@"Server=DESKTOP-NA7LG1A;Initial Catalog=code-for-fun;Persist Security Info=False;User ID=sa;Password=sa123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;");
+			optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=code-for-fun-db;Trusted_Connection=True");
 
 		}
 
@@ -77,6 +77,7 @@ namespace CodeForFun.Repository.DataAccess.DbContexts
 				entity.HasOne(d => d.Category)
 						.WithMany(p => p.Products)
 						.HasForeignKey(d => d.CategoryId)
+						.IsRequired(false)
 						.HasConstraintName("FK_Products_Categories");
 
 				entity.HasOne(x => x.ProductDetail)
@@ -99,11 +100,6 @@ namespace CodeForFun.Repository.DataAccess.DbContexts
 
 			modelBuilder.Entity<ProductsToCustomer>(entity =>
 			{
-				entity.HasKey(e => new
-				{
-					e.CustomerId,
-					e.ProductId
-				});
 
 				entity.HasOne(d => d.Customer)
 					.WithMany(p => p.ProductsToCustomers)
