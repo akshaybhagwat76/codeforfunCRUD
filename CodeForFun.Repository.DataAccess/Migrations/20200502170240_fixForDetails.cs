@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CodeForFun.Repository.DataAccess.Migrations
 {
-    public partial class Initial : Migration
+    public partial class fixForDetails : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -65,7 +65,8 @@ namespace CodeForFun.Repository.DataAccess.Migrations
                     Name = table.Column<string>(unicode: false, maxLength: 32, nullable: true),
                     UnitPrice = table.Column<decimal>(type: "decimal(9, 2)", nullable: true),
                     Date_Register = table.Column<DateTime>(type: "smalldatetime", nullable: false),
-                    IsActive = table.Column<bool>(nullable: false)
+                    IsActive = table.Column<bool>(nullable: false),
+                    ProductDetailId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -107,13 +108,14 @@ namespace CodeForFun.Repository.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false),
-                    Description = table.Column<string>(unicode: false, maxLength: 256, nullable: true)
+                    Description = table.Column<string>(unicode: false, maxLength: 256, nullable: true),
+                    ProductId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ProductDetails", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProductDetails_Products",
+                        name: "FK_ProductDetails_Products_Id",
                         column: x => x.Id,
                         principalTable: "Products",
                         principalColumn: "Id",

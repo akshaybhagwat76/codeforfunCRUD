@@ -94,7 +94,7 @@ namespace CodeForFun.UI.WebMvcCore.Controllers
 
 			if (getProd.Result != null)
 			{
-				_repos.ProductDetails.Remove(productDetails);
+				getProd.Result.ProductDetail = productDetails;
 				_productService.DeleteAsync(getProd.Result);
 			}
 

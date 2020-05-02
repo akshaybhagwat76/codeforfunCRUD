@@ -223,7 +223,9 @@ namespace CodeForFun.Repository.DataAccess.Migrations
                 {
                     b.HasOne("CodeForFun.Repository.Entities.Concrete.Product", "IdNavigation")
                         .WithOne("ProductDetail")
-                        .HasForeignKey("CodeForFun.Repository.Entities.Concrete.ProductDetail", "Id");
+                        .HasForeignKey("CodeForFun.Repository.Entities.Concrete.ProductDetail", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("CodeForFun.Repository.Entities.Concrete.ProductsToCustomer", b =>

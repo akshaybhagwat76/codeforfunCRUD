@@ -27,11 +27,10 @@ namespace CodeForFun.Repository.Entities.Concrete
         public DateTime DateRegister { get; set; }
         public bool IsActive { get; set; }
 
-        [InverseProperty("Products")]
         public virtual Category Category { get; set; }
-        [InverseProperty("IdNavigation")]
         public int? ProductDetailId { get; set; }
         public virtual ProductDetail ProductDetail { get; set; }
+
         [InverseProperty(nameof(ProductsToCustomer.Product))]
         public virtual ICollection<ProductsToCustomer> ProductsToCustomers { get; set; }
     }

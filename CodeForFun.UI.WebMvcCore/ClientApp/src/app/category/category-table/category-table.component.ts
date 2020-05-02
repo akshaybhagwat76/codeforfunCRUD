@@ -52,8 +52,8 @@ export class CategoryTableComponent implements OnInit {
   }
 
   fetch(){
-    this.categories = [];
     this.categoryService.loadCategoriesWithParents().subscribe((x:Array<any>)=>{
+      this.categories = [];
       x.forEach(y=>{
         this.categories.push(y);
       })

@@ -9,13 +9,11 @@ namespace CodeForFun.Repository.Entities.Concrete
 {
     public partial class ProductDetail : IEntity
     {
-        [Key]
         public int Id { get; set; }
         [StringLength(256)]
         public string Description { get; set; }
 
         public int? ProductId { get; set; }
-        [InverseProperty(nameof(Product.ProductDetail))]
         public virtual Product IdNavigation { get; set; }
     }
 }

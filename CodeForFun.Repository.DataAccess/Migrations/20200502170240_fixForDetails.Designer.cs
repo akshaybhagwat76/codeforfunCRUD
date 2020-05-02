@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CodeForFun.Repository.DataAccess.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20200429161837_ProductDetailsCanNull")]
-    partial class ProductDetailsCanNull
+    [Migration("20200502170240_fixForDetails")]
+    partial class fixForDetails
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

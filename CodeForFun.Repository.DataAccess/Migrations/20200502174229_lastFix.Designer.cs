@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CodeForFun.Repository.DataAccess.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20200429125321_Initial")]
-    partial class Initial
+    [Migration("20200502174229_lastFix")]
+    partial class lastFix
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -92,6 +92,9 @@ namespace CodeForFun.Repository.DataAccess.Migrations
                         .HasMaxLength(32)
                         .IsUnicode(false);
 
+                    b.Property<int?>("ProductDetailId")
+                        .HasColumnType("int");
+
                     b.Property<decimal?>("UnitPrice")
                         .HasColumnType("decimal(9, 2)");
 
@@ -111,6 +114,9 @@ namespace CodeForFun.Repository.DataAccess.Migrations
                         .HasColumnType("varchar(256)")
                         .HasMaxLength(256)
                         .IsUnicode(false);
+
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -220,7 +226,7 @@ namespace CodeForFun.Repository.DataAccess.Migrations
                     b.HasOne("CodeForFun.Repository.Entities.Concrete.Product", "IdNavigation")
                         .WithOne("ProductDetail")
                         .HasForeignKey("CodeForFun.Repository.Entities.Concrete.ProductDetail", "Id")
-                        .HasConstraintName("FK_ProductDetails_Products")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 

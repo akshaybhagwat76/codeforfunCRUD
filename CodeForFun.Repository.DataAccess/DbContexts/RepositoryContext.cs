@@ -17,7 +17,7 @@ namespace CodeForFun.Repository.DataAccess.DbContexts
 		}
 		public RepositoryContext()
 		{
-			Database.EnsureCreated();
+			 Database.EnsureCreated();
 			this.Roles.Add(new Role { Name = "Admin" });
 			this.Roles.Add(new Role { Name = "Member" });
 			this.Roles.Add(new Role { Name = "User" });
@@ -82,7 +82,7 @@ namespace CodeForFun.Repository.DataAccess.DbContexts
 				entity.HasOne(x => x.ProductDetail)
 				.WithOne(x => x.IdNavigation)
 				.HasForeignKey<ProductDetail>(x => x.Id)
-								.IsRequired(false);
+				.OnDelete(DeleteBehavior.Cascade);
 			});
 
 			modelBuilder.Entity<ProductDetail>(entity =>
@@ -94,7 +94,7 @@ namespace CodeForFun.Repository.DataAccess.DbContexts
 				entity.HasOne(d => d.IdNavigation)
 							.WithOne(p => p.ProductDetail)
 							.HasForeignKey<ProductDetail>(d => d.Id)
-							.IsRequired(false);
+							.OnDelete(DeleteBehavior.Cascade);
 			});
 
 			modelBuilder.Entity<ProductsToCustomer>(entity =>
