@@ -28,7 +28,7 @@ namespace CodeForFun.Repository.Business.Concrete.Managers
         // GET ASYNC
         public async Task<ProductsToCustomer> GetAsync(int id)
         {
-            return await _dal.ProductsToCustomers.ReadAsync(p => p.Id == id);
+            return await _dal.ProductsToCustomers.ReadAsync(p => p.ProductsToCustomerId == id);
         }
 
         // GET ALL ASYNC

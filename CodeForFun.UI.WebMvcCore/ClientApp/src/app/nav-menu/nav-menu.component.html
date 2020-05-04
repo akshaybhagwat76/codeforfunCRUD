@@ -20,48 +20,39 @@
         [ngClass]="{ show: isExpanded }"
       >
         <ul class="navbar-nav flex-grow">
-          <li
-            class="nav-item"
-            [routerLinkActive]="['link-active']"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-            <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
+          <li class="nav-item" *ngIf="isLogged"
+              [routerLinkActive]="['link-active']"
+              [routerLinkActiveOptions]="{ exact: true }">
+            <a class="nav-link text-dark" [routerLink]="['/home']">Customers</a>
           </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/counter']"
-              >Counter</a
-            >
+          <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="isLogged">
+            <a class="nav-link text-dark" [routerLink]="['/counter']">Product details</a>
           </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/products']"
-              >Products</a
-            >
+          <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="isLogged">
+            <a class="nav-link text-dark" [routerLink]="['/customertable']">Categories</a>
           </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/fetch-data']"
-              >Fetch data</a
-            >
+          <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="isLogged">
+            <a class="nav-link text-dark" [routerLink]="['/products']">Products</a>
+          </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="isLogged">
+            <a class="nav-link text-dark" [routerLink]="['/fetch-data']">Product to customer</a>
           </li>
           <li *ngIf="!isLogged" class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" (click)="loginForm = !loginForm;registerForm = false"
-              >Login</a
-            >
+            <a class="nav-link text-dark" (click)="loginForm = !loginForm;registerForm = false">Login</a>
           </li>
           <li class="nav-item" *ngIf="!isLogged" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" (click)="registerForm = !registerForm;loginForm = false"
-              >Register</a
-            >
+            <a class="nav-link text-dark" (click)="registerForm = !registerForm;loginForm = false">Register</a>
           </li>
 
           <div *ngIf="isLogged">
-          <button type="button"  class="btn  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-          aria-expanded="false">
-          Welcome {{user.name}}
-        </button>
-        <div class="dropdown-menu topsearch text-right">
-          <button class="dropdown-item nav-link" (click)="logout()">LogOut</button>
-        </div>
-      </div>
+            <button type="button" class="btn  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+              Welcome {{user.name}}
+            </button>
+            <div class="dropdown-menu topsearch text-right">
+              <button class="dropdown-item nav-link" (click)="logout()">LogOut</button>
+            </div>
+          </div>
         </ul>
       </div>
     </div>

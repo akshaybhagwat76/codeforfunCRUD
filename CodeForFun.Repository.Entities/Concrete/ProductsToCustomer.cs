@@ -4,17 +4,15 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using CodeForFun.Core.Entities;
+using CodeForFun.Repository.Entities.Concrete.CodeForFun.Repository.Entities.Concrete;
 
 namespace CodeForFun.Repository.Entities.Concrete
 {
     public partial class ProductsToCustomer : IEntity
     {
         [Key]
-        public int Id { get; set; }
         public int ProductsToCustomerId { get; set; }
-        [Key]
         public int CustomerId { get; set; }
-        [Key]
         public int ProductId { get; set; }
 
         [ForeignKey(nameof(CustomerId))]

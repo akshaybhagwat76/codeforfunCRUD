@@ -16,7 +16,10 @@ namespace CodeForFun.Repository.Business.Concrete.Managers
             _dal = dal;
         }
 
-
+        public async Task<Customer> GetByName(string name)
+        {
+            return await _dal.Customer.Get(x => x.Name == name);
+        }
         // GET ASYNC
         public async Task<Customer> GetAsync(int id)
         {

@@ -13,6 +13,7 @@ export class CategoryComponent implements OnInit {
   constructor(private categoryService:CategoryService) { }
 
   ngOnInit() {
+    debugger
     this.categoryService.loadCategories().subscribe((x:Array<Category>)=>{
       x.forEach(y=>{
         this.categories.push(y);

@@ -1,6 +1,7 @@
 ﻿using CodeForFun.Repository.Business.Abstract.Services;
 using CodeForFun.Repository.DataAccess.Abstract;
 using CodeForFun.Repository.Entities.Concrete;
+using CodeForFun.Repository.Entities.Concrete.CodeForFun.Repository.Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -73,6 +74,13 @@ namespace CodeForFun.Repository.Business.Concrete.Managers
         public async Task<List<Product>> GetAllWithInclude(params Expression<Func<Product, object>>[] includeProperties)
         {
             return await _dal.Product.GetAllWithInclude(includeProperties);
+        }
+
+        public async Task<Product> GetByName(string name)
+
+        {
+            return await _dal.Product.Get(x => x.Name == name);
+
         }
     }
 }

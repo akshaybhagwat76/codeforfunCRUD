@@ -2,6 +2,7 @@
 using CodeForFun.Repository.DataAccess.Abstract;
 using CodeForFun.Repository.DataAccess.DbContexts;
 using CodeForFun.Repository.Entities.Concrete;
+using CodeForFun.Repository.Entities.Concrete.CodeForFun.Repository.Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Text;

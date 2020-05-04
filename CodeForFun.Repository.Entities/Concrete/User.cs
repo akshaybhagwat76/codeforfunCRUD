@@ -1,4 +1,5 @@
 ﻿using CodeForFun.Core.Entities;
+using CodeForFun.Repository.Entities.Concrete;
 using System;
 
 namespace CodeForFun.UI.WebMvcCore.Models
@@ -13,6 +14,7 @@ namespace CodeForFun.UI.WebMvcCore.Models
         public string Name { get; set; }
         public string Surname { get; set; }
 
-
+        public int RoleId { get; set; }
+        public Role Role { get; set; }
     }
 }

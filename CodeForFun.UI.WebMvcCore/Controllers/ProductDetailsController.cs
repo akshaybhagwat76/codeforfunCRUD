@@ -5,114 +5,129 @@ using System.Threading.Tasks;
 using AutoMapper;
 using CodeForFun.Repository.Business.Abstract.Services;
 using CodeForFun.Repository.Entities.Concrete;
+using CodeForFun.Repository.Entities.Concrete.CodeForFun.Repository.Entities.Concrete;
 using CodeForFun.UI.WebMvcCore.Models.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CodeForFun.UI.WebMvcCore.Controllers
 {
-	[Route("api/[controller]")]
-	[ApiController]
-	public class ProductDetailsController : ControllerBase
-	{
-		private readonly IProductDetailsService _productDetailService;
-		private readonly IProductService _productService;
+    [Route("api/[controller]")]
+    [ApiController]
+    public class ProductDetailsController : ControllerBase
+    {
+        private readonly IProductDetailsService _productDetailService;
+        private readonly IProductService _productService;
 
-		private readonly IMapper _mapper;
-		private readonly ICategoryService _categoryService;
+        private readonly IMapper _mapper;
+        private readonly ICategoryService _categoryService;
 
-		public ProductDetailsController(IProductDetailsService productDetailService, IProductService productService, ICategoryService categoryService, IMapper mapper)
-		{
-			_productDetailService = productDetailService;
-			_categoryService = categoryService;
-			_productService = productService;
-			_mapper = mapper;
-		}
+        public ProductDetailsController(IProductDetailsService productDetailService, IProductService productService, ICategoryService categoryService, IMapper mapper)
+        {
+            _productDetailService = productDetailService;
+            _categoryService = categoryService;
+            _productService = productService;
+            _mapper = mapper;
+        }
 
-		[HttpGet]
-		[Route("GetAllProducts")]
-		public async Task<List<Product>> GetProducts()
-		{
-			var productDetails = await _productDetailService.GetListAsync();
-			var products = await _productService.GetListAsync();
-			products = products.Where(x => !productDetails.Any(y => y.Id == x.Id)).ToList();
-			return products;
-		}
+        [HttpGet]
+        [Route("GetAllProducts")]
+        public async Task<List<Product>> GetProducts()
+        {
+            var productDetails = await _productDetailService.GetListAsync();
+            var products = await _productService.GetListAsync();
+            products = products.Where(x => !productDetails.Any(y => y.Id == x.Id)).ToList();
+            return products;
+        }
 
-		// GET: api/Product
-		[HttpGet]
-		[Route("GetAll")]
-		public async Task<List<ProductDetail>> Get()
-		{
-			var products = await _productDetailService.GetListAsync();
-			if (products != null)
-			{
-				foreach (var item in products)
-				{
-					if (item.IdNavigation == null)
-					{
-						var product = await _productService.GetAsync(item.Id);
-						item.IdNavigation = product;
-					}
-				}
-			}
-			return _mapper.Map<List<ProductDetail>>(products);
-		}
-		[HttpGet]
-		[Route("Ajax")]
-		public IActionResult ReturnAjax(string text)
-		{
-			return Ok(text);
-		}
-		[HttpGet]
-		public async Task<ProductDetail> Get(int id)
-		{
-			var product =await _productDetailService.GetAsync(id);
+        // GET: api/Product
+        [HttpGet]
+        [Route("GetAll")]
+        public async Task<List<ProductDetail>> Get()
+        {
+            var products = await _productDetailService.GetListAsync();
+            if (products != null)
+            {
+                foreach (var item in products)
+                {
+                    if (item.IdNavigation == null)
+                    {
+                        var product = await _productService.GetAsync(item.Id);
+                        item.IdNavigation = product;
+                    }
+                }
+            }
+            return _mapper.Map<List<ProductDetail>>(products);
+        }
+        [HttpGet]
+        [Route("Ajax")]
+        public IActionResult ReturnAjax(string text)
+        {
+            return Ok(text);
+        }
+        [HttpGet]
+        public async Task<ProductDetail> Get(int id)
+        {
+            var product = await _productDetailService.GetAsync(id);
 
-			if (product == null)
-				return null;
+            if (product == null)
+                return null;
 
-			return product;
-		}
+            return product;
+        }
 
-		// POST: api/Product
-		[HttpPost]
-		public async Task<IActionResult> Post(ProductDetailViewModel product)
-		{
-			var newProduct = new ProductDetail()
-			{
-				Id= product.Id,
-				Description = product.Description
-			};
+        // POST: api/Product
+        [HttpPost]
+        public async Task<IActionResult> Post(ProductDetailViewModel product)
+        {
+            Product idNavigation = null;
+            if (product.IdNavigation!=null)
+            {
+                idNavigation = new Product { Id = product.IdNavigation.Id, Name = product.IdNavigation.Name,DateRegister = DateTime.Now };
+            }
+            var newProduct = new ProductDetail()
+            {
+                Id = product.IdNavigation.Id,
+                Description = product.Description,
+                ProductId = product.IdNavigation.Id
+            };
 
-			_productDetailService.AddAsync(newProduct);
+            try
+            {
+                _productDetailService.AddAsync(newProduct);
+            }
+            catch (Exception ex)
+            {
 
-			return Ok();
-		}
+                throw;
+            }
 
-		[HttpPut]
-		public IActionResult Put([FromBody] ProductDetailViewModel product)
-		{
-			if (product == null)
-				return BadRequest("Product is Null");
+            return Ok();
+        }
 
-			_productDetailService.UpdateAsync(new ProductDetail { Description = product.Description,Id=product.Id});
+        [HttpPut]
+        public IActionResult Put([FromBody] ProductDetailViewModel product)
+        {
+            if (product == null)
+                return BadRequest("Product is Null");
+
+            _productDetailService.UpdateAsync(new ProductDetail { Description = product.Description, Id = product.Id });
 
 
-			return Ok();
-		}
+            return Ok();
+        }
 
-		[HttpDelete]
-		public IActionResult Delete(int productId)
-		{
-			var getProd = _productDetailService.GetAsync(productId);
+        [HttpDelete]
+        public IActionResult Delete(int productId)
+        {
+            var getProd = _productDetailService.GetAsync(productId);
 
-			if (getProd.Result != null)
-			{
-				_productDetailService.DeleteAsync(getProd.Result);
-			}
+            if (getProd.Result != null)
+            {
+                _productDetailService.DeleteAsync(getProd.Result);
+            }
 
-			return Ok();
-		}
-	}
+            return Ok();
+        }
+    }
 }

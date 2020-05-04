@@ -1,25 +1,42 @@
 ﻿using CodeForFun.Repository.Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
+using IdentityServer4.EntityFramework.Options;
+
+using Microsoft.Extensions.Options;
 using CodeForFun.UI.WebMvcCore.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using System.Linq;
+using CodeForFun.Repository.Entities.Concrete.CodeForFun.Repository.Entities.Concrete;
 
 namespace CodeForFun.Repository.DataAccess.DbContexts
 {
 	public partial class RepositoryContext : DbContext
 	{
+
 		public RepositoryContext(DbContextOptions<RepositoryContext> options) : base(options)
 		{
-
 		}
 		public RepositoryContext()
 		{
+
 			Database.EnsureCreated();
+			if (!this.Roles.Any())
+			{
+				this.Roles.Add(new Role { Name = "Admin" });
+				this.Roles.Add(new Role { Name = "Member" });
+				this.Roles.Add(new Role { Name = "User" });
+			}
+			this.SaveChanges();
 		}
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-			optionsBuilder.UseSqlServer(@"Server=DESKTOP-NA7LG1A;Initial Catalog=code-for-fun-dbcrud;Persist Security Info=False;User ID=sa;Password=sa123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;");
+			optionsBuilder.UseSqlServer(@"Server=DESKTOP-NA7LG1A;Initial Catalog=code-for-fun-dbcrud1;Persist Security Info=False;User ID=sa;Password=sa123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;");
+
 		}
 
 		public DbSet<User> Users { get; set; }
+		public DbSet<Role> Roles { get; set; }
 		public DbSet<Category> Categories { get; set; }
 		public DbSet<Customer> Customers { get; set; }
 		public DbSet<Product> Products { get; set; }
@@ -46,6 +63,16 @@ namespace CodeForFun.Repository.DataAccess.DbContexts
 				entity.Property(e => e.Surname).IsUnicode(false);
 			});
 
+			modelBuilder.Entity<User>(entity =>
+			{
+				entity
+				.HasOne(x => x.Role)
+				.WithMany(x => x.Users)
+				.HasForeignKey(x => x.RoleId);
+
+			});
+
+
 			modelBuilder.Entity<Product>(entity =>
 			{
 				entity.Property(e => e.Code).IsUnicode(false);
@@ -56,11 +83,12 @@ namespace CodeForFun.Repository.DataAccess.DbContexts
 				entity.HasOne(d => d.Category)
 						.WithMany(p => p.Products)
 						.HasForeignKey(d => d.CategoryId)
-						.HasConstraintName("FK_Products_Categories");
+						.IsRequired(false);
 
 				entity.HasOne(x => x.ProductDetail)
 				.WithOne(x => x.IdNavigation)
-				.HasForeignKey<ProductDetail>(x => x.Id);
+				.HasForeignKey<ProductDetail>(x => x.Id)
+				.OnDelete(DeleteBehavior.Cascade);
 			});
 
 			modelBuilder.Entity<ProductDetail>(entity =>
@@ -72,17 +100,11 @@ namespace CodeForFun.Repository.DataAccess.DbContexts
 				entity.HasOne(d => d.IdNavigation)
 							.WithOne(p => p.ProductDetail)
 							.HasForeignKey<ProductDetail>(d => d.Id)
-							.OnDelete(DeleteBehavior.ClientSetNull)
-							.HasConstraintName("FK_ProductDetails_Products");
+							.OnDelete(DeleteBehavior.Cascade);
 			});
 
 			modelBuilder.Entity<ProductsToCustomer>(entity =>
 			{
-				entity.HasKey(e => new
-				{
-					e.CustomerId,
-					e.ProductId
-				});
 
 				entity.HasOne(d => d.Customer)
 					.WithMany(p => p.ProductsToCustomers)
@@ -96,6 +118,18 @@ namespace CodeForFun.Repository.DataAccess.DbContexts
 									.OnDelete(DeleteBehavior.ClientSetNull)
 									.HasConstraintName("FK_ProductsToCustomers_Products");
 			});
+
+
+			modelBuilder.Entity<Role>().HasData(new[]{
+   new Role {
+	  RoleID = 1, // Must be != 0
+      Name = "Admin",
+   },
+   new Role {
+	  RoleID = 2, // Must be != 0
+      Name = "User",
+   }
+});
 
 			OnModelCreatingPartial(modelBuilder);
 		}

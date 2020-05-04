@@ -17,10 +17,13 @@ namespace CodeForFun.UI.WebMvcCore.Controllers
 	{
 		private readonly ICategoryService _categoryService;
 		private readonly IMapper _mapper;
+		private readonly IProductService _productService;
 
-		public CategoryController(ICategoryService CategoryService, IMapper mapper)
+		public CategoryController(ICategoryService CategoryService, IMapper mapper,IProductService productService)
 		{
 			_categoryService = CategoryService;
+			_productService = productService;
+
 			_mapper = mapper;
 		}
 
@@ -30,8 +33,7 @@ namespace CodeForFun.UI.WebMvcCore.Controllers
 		public async Task<IEnumerable<CategoryViewModel>> Get()
 		{
 			var categories = await _categoryService.GetListAsync();
-
-			return _mapper.Map<IEnumerable<CategoryViewModel>>(categories.Where(x=>x.Parent != null));
+			return _mapper.Map<IEnumerable<CategoryViewModel>>(categories.Where(x => x.Parent == null));
 		}
 
 		[HttpGet]
@@ -45,6 +47,25 @@ namespace CodeForFun.UI.WebMvcCore.Controllers
 			return Category;
 		}
 
+		[HttpGet]
+		[Route("GetAllWithParents")]
+		public async Task<IEnumerable<CategoryViewModelWithParent>> GetAllWithParents()
+		{
+			try
+			{
+				var o = await _categoryService.GetListAsync();
+				var categories = _mapper.Map<IEnumerable<CategoryViewModelWithParent>>(await _categoryService.GetListAsync());
+
+				return categories;
+			}
+			catch (Exception e)
+			{
+
+				throw;
+			}
+		}
+
+
 		// POST: api/Category
 		[HttpPost]
 		public IActionResult Post([FromBody] Category Category)
@@ -55,17 +76,22 @@ namespace CodeForFun.UI.WebMvcCore.Controllers
 		}
 
 		[HttpPut]
-		public IActionResult Put([FromBody] Category Category)
+		[HttpPut]
+		public IActionResult Put([FromBody] CategoryViewModelWithParent category)
 		{
-			if (Category == null)
+			if (category == null)
 				return BadRequest("Category is Null");
 
-			var getProd = _categoryService.GetAsync(Category.Id);
-
-			if (getProd != null)
+			Category element = _categoryService.GetAsync(category.Id).Result;
+			element.Name = category.Name;
+			if (category.ParentName != null)	
 			{
-				_categoryService.UpdateAsync(Category);
+				Category parent = _categoryService.GetByName(category.ParentName).Result;
+				element.ParentId = parent.Id;
+
 			}
+
+			_categoryService.UpdateAsync(element);
 
 			return Ok();
 		}
@@ -73,6 +99,26 @@ namespace CodeForFun.UI.WebMvcCore.Controllers
 		[HttpDelete]
 		public IActionResult Delete(int id)
 		{
+			var getProduts = _productService.GetListAsync().Result.Where(x => x.CategoryId == id);
+			if (getProduts.Count() > 0)
+			{
+				foreach (var item in getProduts)
+				{
+					_productService.DeleteAsync(item);
+
+				}
+			}
+
+
+			var getChild = _categoryService.GetListAsync().Result.Where(x => x.ParentId == id);
+			if (getChild.Count() > 0)
+			{
+				foreach (var item in getChild)
+				{
+					_categoryService.DeleteAsync(item);
+
+				}
+			}
 			var getProd = _categoryService.GetAsync(id);
 
 			if (getProd.Result != null)

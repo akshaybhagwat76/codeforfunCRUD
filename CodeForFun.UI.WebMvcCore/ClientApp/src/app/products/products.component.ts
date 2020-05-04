@@ -23,16 +23,23 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit() {
     this.isProductsShow = true;
+    this.isOrdersShow = true;
     this.fetch();
   }
 
   editModeForProduct(product) {
     this.editMode = !this.editMode;
+    this.creatingMode = false;
+    this.isOrdersShow = false;
     this.productForEditOrCreate = product;
   }
 
   editProduct() {
+    this.productForEditOrCreate.categoryName = this.categoryName;
+
     this.productService.edit(this.productForEditOrCreate).subscribe(x => {
+      this.isOrdersShow = true;
+
       this.editMode = !this.editMode;
       this.fetch();
     })
@@ -55,6 +62,7 @@ export class ProductsComponent implements OnInit {
   }
 
   createProductMode() {
+    this.productForEditOrCreate = {};
     this.creatingMode = !this.creatingMode;
   }
 
@@ -85,6 +93,7 @@ export class ProductsComponent implements OnInit {
 
   createProduct() {
     this.productForEditOrCreate.categoryName = this.categoryName;
+    debugger
     this.productService.add(this.productForEditOrCreate).subscribe(x => {
       this.fetch();
       this.creatingMode = !this.creatingMode;

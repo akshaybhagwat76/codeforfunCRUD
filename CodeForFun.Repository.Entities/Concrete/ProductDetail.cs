@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using CodeForFun.Core.Entities;
+using CodeForFun.Repository.Entities.Concrete.CodeForFun.Repository.Entities.Concrete;
 
 namespace CodeForFun.Repository.Entities.Concrete
 {
@@ -13,6 +14,7 @@ namespace CodeForFun.Repository.Entities.Concrete
         public int Id { get; set; }
         [StringLength(256)]
         public string Description { get; set; }
+        public int? ProductId { get; set; }
 
         [ForeignKey(nameof(Id))]
         [InverseProperty(nameof(Product.ProductDetail))]

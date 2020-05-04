@@ -20,6 +20,15 @@ export class CustomerService {
     return sub;
 
   }
+  getAllCustomers() {
+    const sub = new Subject<any>();
+
+    this.http.get('/api/customers/GetAll').subscribe(x => {
+      sub.next(x)
+    })
+
+    return sub;
+  }
   deleteProductDetail(productId) {
     const sub = new Subject<any>();
 

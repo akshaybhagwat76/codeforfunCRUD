@@ -6,20 +6,20 @@
           <h2>Manage <b>Employees</b></h2>
         </div>
         <div class="col-sm-6">
-          <a href="" (click)="OrdersMode('getAll')" *ngIf="!isOrdersShow && isProductsShow" class="btn btn-success" data-toggle="modal"> <span>Orders</span></a>
-          <a href="" (click)="OrdersMode()" *ngIf="isOrdersShow && !isProductsShow" class="btn btn-success" data-toggle="modal"> <span>Products</span></a>
-          <a  (click)="createProductMode()"  class="btn btn-success" data-toggle="modal">
+          <!--<a href="" (click)="OrdersMode('getAll')" *ngIf="!isOrdersShow && isProductsShow" class="btn btn-success" data-toggle="modal"> <span>Orders</span></a>
+          <a href="" (click)="OrdersMode()" *ngIf="isOrdersShow && !isProductsShow" class="btn btn-success" data-toggle="modal"> <span>Products</span></a>-->
+          <a  (click)="createProductMode()" *ngIf="isOrdersShow"  class="btn btn-success" data-toggle="modal">
             <span>Add New Product</span>
 
           </a>
-          <a  [routerLink]="['/productdetails']" class="btn btn-success" data-toggle="modal">
+          <!--<a  [routerLink]="['/productdetails']" class="btn btn-success" data-toggle="modal">
             <span>Add New Detail</span>
 
           </a>
           <a [routerLink]="['/customers']" class="btn btn-success" data-toggle="modal">
             <span>Add New Customer</span>
 
-          </a><br /><br /><br />
+          </a><br /><br /><br />-->
           <app-category (selectedCategory)="selectCategory($event)"></app-category>
         </div>
       </div>
@@ -104,11 +104,13 @@
               </div>
               <div class="form-group">
                 <label>CategoryName</label>
-                <input type="text" class="form-control" [(ngModel)]="productForEditOrCreate.categoryName" name="categoryName" required>
+                <app-category (selectedCategory)="saveSelectedCategory($event)"></app-category>
+
               </div>
             </div>
             <div class="modal-footer">
-              <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel" (click)="editMode = !editMode">
+              <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel" (click)="editMode = !editMode;isOrdersShow = true;">
+
               <input type="submit" class="btn btn-info" value="Save" (click)="editProduct()">
             </div>
           </form>
@@ -154,7 +156,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel" (click)="editMode = !editMode">
+          <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel" (click)="editMode = !editMode; creatingMode = true;isOrdersShow = true;">
           <input type="submit" class="btn btn-info" value="Save" (click)="createProduct()">
         </div>
       </form>
