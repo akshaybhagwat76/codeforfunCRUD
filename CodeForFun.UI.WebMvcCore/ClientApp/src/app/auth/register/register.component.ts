@@ -12,17 +12,19 @@ import { Router } from '@angular/router';
 export class RegisterComponent implements OnInit {
   model: any = {};
   socialLogin: any = {};
-
+  visibility: boolean = true;
   @Output() user = new EventEmitter<any>();
 
   constructor(private authService: AuthService, private accountService: AccountService, private router: Router) { }
 
   ngOnInit() {
     this.authService.authState.subscribe(x => {
-
+      debugger
       if (x != null) {
         this.socialLogin.name = x.name || null;
         this.socialLogin.email = x.email || null;
+        this.visibility = false;
+
         this.user.emit(this.socialLogin);
       }
     })
@@ -51,8 +53,9 @@ export class RegisterComponent implements OnInit {
   register(){
     this.accountService.register(this.model).subscribe(x => {
       this.user.emit(this.model);
-      this.router.navigate['products'];
+      this.visibility= false;
 
+      this.router.navigate['/category'];
     })
   }
 }

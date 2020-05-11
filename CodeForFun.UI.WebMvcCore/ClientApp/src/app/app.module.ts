@@ -75,7 +75,7 @@ export function provideConfig() {
       { path: 'productdetails', component: ProductsDetailsComponent },
       { path: 'customers', component: CustomerComponent },
       { path: 'customertable', component: CategoryTableComponent },
-      { path: 'home', component: HomeComponent },
+      { path: 'home', component: CustomerComponent },
       { path: 'fetch-data', component: FetchDataComponent }
 
 

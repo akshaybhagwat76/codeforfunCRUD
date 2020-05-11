@@ -37,7 +37,10 @@ export class CounterComponent {
 
   editProduct() {
     this.productService.editProductDetails(this.productForEditOrCreate).subscribe(x => {
+
       this.editMode = false;
+      this.products = [];
+      this.fetch();
     })
   }
 
@@ -80,6 +83,7 @@ export class CounterComponent {
   }
   deleteProductDetail(productId) {
     this.productService.deleteProductDetail(productId).subscribe(x => {
+      this.products = [];
       this.fetch();
     })
   }
@@ -113,9 +117,8 @@ export class CounterComponent {
   }
 
   createProduct() {
-    debugger
-
     this.productService.addProductDetail(this.productForEditOrCreate).subscribe(x => {
+      this.products = [];
       this.fetch();
       this.creatingMode = !this.creatingMode;
       this.tableContainer = true;

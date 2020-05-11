@@ -29,6 +29,8 @@ export class CategoryTableComponent implements OnInit {
   createCategory() {
     this.creatingMode = !this.creatingMode;
     this.categoryService.createCategory(this.categoryForEditOrCreate).subscribe(x => {
+      this.categories = [];
+
       this.fetch();
       this.categoryForEditOrCreate = {};
       this.creatingMode = false;
@@ -38,6 +40,8 @@ export class CategoryTableComponent implements OnInit {
 
   editCategory() {
     this.categoryService.editCategory(this.categoryForEditOrCreate).subscribe(x => {
+      this.categories = [];
+
       this.fetch();
       this.editMode = false;
       this.tableContainer = true;
@@ -64,6 +68,8 @@ export class CategoryTableComponent implements OnInit {
 
   deleteCategory(category) {
     this.categoryService.deleteCategory(category.id).subscribe(x => {
+      this.categories = [];
+
       this.fetch();
     })
   }

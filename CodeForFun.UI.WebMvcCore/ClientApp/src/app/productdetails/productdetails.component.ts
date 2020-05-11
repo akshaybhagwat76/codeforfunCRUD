@@ -38,6 +38,8 @@ export class ProductsDetailsComponent implements OnInit {
 
   editProduct() {
     this.productService.editProductDetails(this.productForEditOrCreate).subscribe(x => {
+      this.products = [];
+      this.fetch();
         this.editMode = false;
       })
   }
@@ -115,6 +117,7 @@ export class ProductsDetailsComponent implements OnInit {
 
   createProduct() {
     this.productService.addProductDetail(this.productForEditOrCreate).subscribe(x => {
+      this.products = [];
       this.fetch();
       this.creatingMode = !this.creatingMode;
     })

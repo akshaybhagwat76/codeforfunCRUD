@@ -6,21 +6,10 @@
           <h2>Customer <b>Details</b></h2>
         </div>
         <div class="col-sm-6">
-          <a href="" (click)="OrdersMode('getAll')" *ngIf="!isOrdersShow && isProductsShow" class="btn btn-success" data-toggle="modal"> <span>Orders</span></a>
-          <a href="" (click)="OrdersMode()" *ngIf="isOrdersShow && !isProductsShow" class="btn btn-success" data-toggle="modal"> <span>Products</span></a>
-          <a [routerLink]="['/products']" class="btn btn-success" data-toggle="modal">
-            <span>Add New Product</span>
-
-          </a>
-          <a  [routerLink]="['/productdetails']" class="btn btn-success" data-toggle="modal">
-            <span>Add New Detail</span>
-
-          </a>
-          <a (click)="createProductMode()"  class="btn btn-success" data-toggle="modal">
+          <a (click)="createProductMode()" *ngIf="isOrdersShow" class="btn btn-success" data-toggle="modal">
             <span>Add New Customer</span>
 
-          </a><br /><br /><br />
-          <app-category (selectedCategory)="selectCategory($event)"></app-category>
+          </a>
         </div>
       </div>
     </div>
@@ -75,7 +64,7 @@
             <div class="modal-body">
               <div class="form-group">
                 <label>Name</label>
-                <input type="text" class="form-control" #name="ngModel" required [(ngModel)]='productForEditOrCreate.name' name="name" />                             
+                <input type="text" class="form-control" #name="ngModel" required [(ngModel)]='productForEditOrCreate.name' name="name" />
                 <div *ngIf="name.invalid" class="text-danger">
                   <div *ngIf="name.errors.required">Name is required</div>
                 </div>
@@ -129,7 +118,7 @@
         </div>
         <div class="modal-footer">
           <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel" (click)="creatingMode = !creatingMode">
-          <input type="submit" [disabled]="!f.valid" class="btn btn-info" value="Save" >
+          <input type="submit" [disabled]="!f.valid" class="btn btn-info" value="Save">
         </div>
       </form>
     </div>

@@ -23,7 +23,7 @@
           <li class="nav-item" *ngIf="isLogged"
               [routerLinkActive]="['link-active']"
               [routerLinkActiveOptions]="{ exact: true }">
-            <a class="nav-link text-dark" [routerLink]="['/home']">Customers</a>
+            <a class="nav-link text-dark" [routerLink]="['/home']" *ngIf="isLogged">Customers</a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="isLogged">
             <a class="nav-link text-dark" [routerLink]="['/counter']">Product details</a>

@@ -1,8 +1,10 @@
 import { Component, Inject, Input } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { ProductService } from '../services/product.service';
 import { CustomerService } from '../services/customer.service';
 import { ProductsToCustomerService } from '../services/productsToCustomer.service';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-fetch-data',
@@ -30,17 +32,29 @@ export class FetchDataComponent {
     this.productsToCustomerForEditOrCreate = {};
     this.creatingMode = !this.creatingMode;
   }
-
-  createProductsToCustomer() {
+  handleError(error: HttpErrorResponse) {
     debugger
+    console.log("lalalalalalalala");
+    return throwError(error);
+  }
+  createProductsToCustomer() {
+    //debugger
     this.productsToCustomerService.createNewOrder(this.productsToCustomerForEditOrCreate).subscribe(x => {
       debugger
+      if (x && x.status === "Failed") {
+        alert('Failed to add please select field properly')
+      }
+      this.productsToCustomer = [];
+
       this.fetch();
       this.creatingMode = !this.creatingMode;
       this.productsToCustomerForEditOrCreate = null;
       this.productsToCustomerService.isCreationMode = false;
       this.tableContainer = true;
+
     })
+
+
   }
 
   selectProduct(name) {
@@ -66,6 +80,8 @@ export class FetchDataComponent {
   editProductToCustomer() {
     this.productsToCustomerService.update(this.productsToCustomerForEditOrCreate).subscribe(x => {
       this.editMode = !this.editMode;
+      this.productsToCustomer = [];
+
       this.fetch();
     })
   }
@@ -76,9 +92,29 @@ export class FetchDataComponent {
     })
   }
 
+  errorHandler(error: HttpErrorResponse) {
+    debugger
+    if (error.error instanceof ErrorEvent) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.error.message);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong,
+      console.error(
+        `Backend returned code ${error.status}, ` +
+        `body was: ${error.error}`);
+    }
+    // return an observable with a user-facing error message
+    return throwError(
+      'Something bad happened; please try again later.');
+  }
+
+
   deleteProductsToCustomer(productsToCustomerId) {
     debugger
     this.productsToCustomerService.deleteProductsToCustomer(productsToCustomerId).subscribe(x => {
+      this.productsToCustomer = [];
+
       this.fetch();
     })
   }

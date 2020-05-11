@@ -9,7 +9,6 @@ import { CustomerService } from '../services/customer.service';
   styleUrls: ['./customer.component.css']
 })
 export class CustomerComponent implements OnInit {
-
   products: Array<Product> = [];
   filteredProducts: Array<Product> = [];
   isOrdersShow = false;
@@ -27,17 +26,23 @@ export class CustomerComponent implements OnInit {
   ngOnInit() {
     this.tableContainer = true;
     this.isProductsShow = true;
+    this.isOrdersShow = true;
     this.fetch();
   }
 
   editModeForProduct(product) {
     this.editMode = !this.editMode;
+    this.isOrdersShow = false;
+
     this.productForEditOrCreate = product;
   }
 
   editProduct() {
     this.customerService.editProductDetails(this.productForEditOrCreate).subscribe(x => {
       this.editMode = false;
+      this.isOrdersShow = true;
+      this.products = [];
+      this.fetch();
     })
   }
 
@@ -72,8 +77,9 @@ export class CustomerComponent implements OnInit {
     this.isProductsShow = !this.isProductsShow;
   }
   deleteProductDetail(productId) {
-    debugger
     this.customerService.deleteProductDetail(productId).subscribe(x => {
+      this.products = [];
+
       this.fetch();
     })
   }
@@ -91,11 +97,15 @@ export class CustomerComponent implements OnInit {
 
   createCustomer() {
     this.customerService.addProductDetail(this.productForEditOrCreate).subscribe(x => {
+      this.products = [];
       this.fetch();
       this.creatingMode = false;
       this.tableContainer = true;
-
     })
+    
+
+     
+
   }
 }
 interface Product {
